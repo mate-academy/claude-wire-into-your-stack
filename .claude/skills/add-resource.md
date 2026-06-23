@@ -1,4 +1,5 @@
 ---
+name: add-resource
 description: "Add a resource to this Express API — route file, store helpers, tests, and server mount. Use when the request is to add a new endpoint group or resource (e.g. 'add a products route', 'create a /orders resource')."
 ---
 
