@@ -1,5 +1,5 @@
 ---
-description: "Adding a new REST resource to this Express API: creating a route file, store functions, tests, and mounting the router. Use when the request is to add a new endpoint group or resource (e.g. 'add a products route', 'create a /orders resource')."
+description: "Add a resource to this Express API — route file, store helpers, tests, and server mount. Use when the request is to add a new endpoint group or resource (e.g. 'add a products route', 'create a /orders resource')."
 ---
 
 Follow these patterns exactly when adding a new resource to this API.
