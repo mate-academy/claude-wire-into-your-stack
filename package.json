@@ -8,7 +8,7 @@
     "dev": "node server.js",
     "start": "node server.js",
     "test": "node --test",
-    "lint": "eslint server.js routes db tests"
+    "lint": "eslint server.js routes db middleware lib tests"
   },
   "dependencies": {
     "express": "^4.19.2"
