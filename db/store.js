@@ -48,11 +48,12 @@ function updateUser(id, fields) {
 
 // --- Token helpers ---
 
-function createToken({ name } = {}) {
+function createToken({ name, role = 'client', value } = {}) {
   const token = {
     id: nextTokenId,
     name: name ?? null,
-    token: crypto.randomBytes(32).toString('hex'),
+    role,
+    token: value ?? crypto.randomBytes(32).toString('hex'),
     createdAt: new Date().toISOString(),
   };
   nextTokenId += 1;
@@ -66,9 +67,7 @@ function getTokenByValue(value) {
 
 function revokeToken(id) {
   const index = tokens.findIndex((t) => t.id === id);
-  if (index === -1) return false;
-  tokens.splice(index, 1);
-  return true;
+  if (index !== -1) tokens.splice(index, 1);
 }
 
 // Reset to the seed data. Used by the tests so each one starts clean.

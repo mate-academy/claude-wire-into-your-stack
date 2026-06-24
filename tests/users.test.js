@@ -59,3 +59,22 @@ test('PUT /users/:id returns 404 for a missing user', async () => {
     .send({ name: 'Nobody' });
   assert.equal(res.status, 404);
 });
+
+test('GET /users/:id returns 400 for a non-numeric id', async () => {
+  const res = await request(app)
+    .get('/users/abc')
+    .set('Authorization', `Bearer ${token}`);
+  assert.equal(res.status, 400);
+  assert.equal(res.body.error, 'Invalid id');
+});
+
+test('PUT /users/:id returns 400 for a non-numeric id', async () => {
+  const res = await request(app)
+    .put('/users/abc')
+    .set('Authorization', `Bearer ${token}`)
+    .send({ name: 'X' });
+  assert.equal(res.status, 400);
+  assert.equal(res.body.error, 'Invalid id');
+});
+
+

@@ -1,5 +1,6 @@
 const express = require('express');
 const store = require('../db/store');
+const parseId = require('../lib/parseId');
 
 const router = express.Router();
 
@@ -10,7 +11,11 @@ router.get('/', (req, res) => {
 
 // GET /users/:id — fetch one user, or 404 if it doesn't exist.
 router.get('/:id', (req, res) => {
-  const user = store.getUser(Number(req.params.id));
+  const id = parseId(req.params.id);
+  if (id === null) {
+    return res.status(400).json({ error: 'Invalid id' });
+  }
+  const user = store.getUser(id);
   if (!user) {
     return res.status(404).json({ error: 'User not found' });
   }
@@ -19,7 +24,7 @@ router.get('/:id', (req, res) => {
 
 // POST /users — create a user. Requires name and email.
 router.post('/', (req, res) => {
-  const { name, email } = req.body;
+  const { name, email } = req.body ?? {};
   if (!name || !email) {
     return res.status(400).json({ error: 'name and email are required' });
   }
@@ -29,11 +34,15 @@ router.post('/', (req, res) => {
 
 // PUT /users/:id — update an existing user (added in Project 2).
 router.put('/:id', (req, res) => {
-  const { name, email } = req.body;
+  const id = parseId(req.params.id);
+  if (id === null) {
+    return res.status(400).json({ error: 'Invalid id' });
+  }
+  const { name, email } = req.body ?? {};
   if (name === undefined && email === undefined) {
     return res.status(400).json({ error: 'name or email is required' });
   }
-  const user = store.updateUser(Number(req.params.id), { name, email });
+  const user = store.updateUser(id, { name, email });
   if (!user) {
     return res.status(404).json({ error: 'User not found' });
   }
