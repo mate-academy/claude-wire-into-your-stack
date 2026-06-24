@@ -49,4 +49,14 @@ router.put('/:id', (req, res) => {
   return res.json(user);
 });
 
+// DELETE /users/:id — remove a user. Returns 204 whether or not the user existed (idempotent).
+router.delete('/:id', (req, res) => {
+  const id = parseId(req.params.id);
+  if (id === null) {
+    return res.status(400).json({ error: 'Invalid id' });
+  }
+  store.deleteUser(id);
+  return res.status(204).send();
+});
+
 module.exports = router;

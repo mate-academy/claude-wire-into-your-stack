@@ -77,4 +77,31 @@ test('PUT /users/:id returns 400 for a non-numeric id', async () => {
   assert.equal(res.body.error, 'Invalid id');
 });
 
+test('DELETE /users/:id removes the user and returns 204', async () => {
+  const res = await request(app)
+    .delete('/users/1')
+    .set('Authorization', `Bearer ${token}`);
+  assert.equal(res.status, 204);
+
+  const check = await request(app)
+    .get('/users/1')
+    .set('Authorization', `Bearer ${token}`);
+  assert.equal(check.status, 404);
+});
+
+test('DELETE /users/:id returns 204 even when the user does not exist (idempotent)', async () => {
+  const res = await request(app)
+    .delete('/users/999')
+    .set('Authorization', `Bearer ${token}`);
+  assert.equal(res.status, 204);
+});
+
+test('DELETE /users/:id returns 400 for a non-numeric id', async () => {
+  const res = await request(app)
+    .delete('/users/abc')
+    .set('Authorization', `Bearer ${token}`);
+  assert.equal(res.status, 400);
+  assert.equal(res.body.error, 'Invalid id');
+});
+
 

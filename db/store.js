@@ -46,6 +46,11 @@ function updateUser(id, fields) {
   return user;
 }
 
+function deleteUser(id) {
+  const index = users.findIndex((u) => u.id === id);
+  if (index !== -1) users.splice(index, 1);
+}
+
 // --- Token helpers ---
 
 function createToken({ name, role = 'client', value } = {}) {
@@ -76,7 +81,7 @@ function reset() {
 }
 
 module.exports = {
-  listUsers, getUser, createUser, updateUser,
+  listUsers, getUser, createUser, updateUser, deleteUser,
   createToken, getTokenByValue, revokeToken,
   reset,
 };
