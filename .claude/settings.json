@@ -1,0 +1,67 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -r '.tool_input.file_path' | { read -r f; [ -n \"$f\" ] && npx prettier --write \"$f\"; } 2>/dev/null || true"
+          }
+        ]
+      }
+    ]
+  },
+  "permissions": {
+    "allow": [
+      "Read",
+      "Grep",
+      "Glob",
+      "Bash(git status)",
+      "Bash(git status *)",
+      "Bash(git diff)",
+      "Bash(git diff *)",
+      "Bash(git log)",
+      "Bash(git log *)",
+      "Bash(git show)",
+      "Bash(git show *)",
+      "Bash(git blame *)",
+      "Bash(git remote -v)",
+      "Bash(git branch --list)",
+      "Bash(git branch -a)",
+      "Bash(git tag --list)",
+      "Bash(gh pr view *)",
+      "Bash(gh pr list*)",
+      "Bash(gh pr diff *)",
+      "Bash(gh pr status)",
+      "Bash(gh pr checks *)",
+      "Bash(gh issue view *)",
+      "Bash(gh issue list*)",
+      "Bash(gh repo view*)",
+      "Bash(gh run list*)",
+      "Bash(gh run view*)",
+      "Bash(gh workflow list*)",
+      "Bash(gh workflow view*)",
+      "Bash(gh auth status)",
+      "mcp__github__get_me",
+      "mcp__github__get_issue",
+      "mcp__github__list_issues",
+      "mcp__github__search_issues",
+      "mcp__github__get_issue_comments",
+      "mcp__github__get_pull_request",
+      "mcp__github__list_pull_requests",
+      "mcp__github__search_pull_requests",
+      "mcp__github__get_pull_request_files",
+      "mcp__github__get_pull_request_diff",
+      "mcp__github__get_pull_request_status",
+      "mcp__github__get_pull_request_comments",
+      "mcp__github__get_pull_request_reviews",
+      "mcp__github__get_file_contents",
+      "mcp__github__list_commits",
+      "mcp__github__get_commit",
+      "mcp__github__search_code",
+      "mcp__github__list_branches",
+      "mcp__github__search_repositories"
+    ]
+  }
+}
