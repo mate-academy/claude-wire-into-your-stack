@@ -36,9 +36,37 @@ function updateUser(id, fields) {
   return user;
 }
 
+let products = [];
+let nextProductId = 1;
+
+function seedProducts() {
+  products = [
+    { id: 1, name: 'Widget', price: 9.99 },
+    { id: 2, name: 'Gadget', price: 24.99 },
+  ];
+  nextProductId = 3;
+}
+seedProducts();
+
+function listProducts() {
+  return products;
+}
+
+function getProduct(id) {
+  return products.find((p) => p.id === id);
+}
+
+function createProduct({ name, price }) {
+  const product = { id: nextProductId, name, price };
+  nextProductId += 1;
+  products.push(product);
+  return product;
+}
+
 // Reset to the seed data. Used by the tests so each one starts clean.
 function reset() {
   seed();
+  seedProducts();
 }
 
-module.exports = { listUsers, getUser, createUser, updateUser, reset };
+module.exports = { listUsers, getUser, createUser, updateUser, listProducts, getProduct, createProduct, reset };
