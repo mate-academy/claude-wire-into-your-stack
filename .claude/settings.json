@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": []
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/lint-fix.js",
+            "timeout": 30
+          }
+        ]
+      }
+    ]
+  }
+}

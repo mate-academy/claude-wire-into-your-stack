@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "git": {
+      "command": "npx",
+      "args": ["-y", "@cyanheads/git-mcp-server@latest"],
+      "env": {
+        "MCP_TRANSPORT_TYPE": "stdio"
+      }
+    }
+  }
+}
