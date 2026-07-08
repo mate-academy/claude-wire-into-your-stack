@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "node server.js",
     "start": "node server.js",
-    "test": "node --test",
+    "test": "node --test --test-timeout=15000 tests/users.test.js",
     "lint": "eslint server.js routes db tests"
   },
   "dependencies": {

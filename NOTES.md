@@ -1,0 +1,11 @@
+# Notes
+
+**MCP server:** Connected the `filesystem` MCP server (`.mcp.json`), which gives direct filesystem access as MCP tools alongside Claude Code's built-ins — useful here mainly as a vehicle for practicing tool-permission rules. The permission rule allowed `mcp__tracker__list_issues` and `mcp__tracker__get_issue` (read-only lookups) while denying `mcp__tracker__delete_issue`, so a tracker integration could be queried but never used to destroy data.
+
+**Skill:** `add-route` captures the repeated pattern of adding a new resource to this Express API — where state lives (`db/store.js`), how a route file is structured and mounted, the exact `{ error: "message" }` response shape with its 400/404 mapping, and the matching test-file skeleton. The description is worded around trigger phrases ("adding a new resource", "adding an endpoint to an existing resource") so it fires whenever a route-adding task comes up, not just when someone names the skill directly.
+
+**Command:** Added `/review-route`, which checks a diff against the `add-route` skill's checklist (store function, route file, mount, error shape, tests, docs, lint/test pass). It's worth a shortcut because that checklist has several independent items that are easy to partially forget (e.g. updating docs, or testing the 400/404 paths) — a named command makes the full check repeatable instead of relying on memory each time.
+
+**Hook:** Three, all project-scoped in `.claude/settings.json`. Two are reactive: `PostToolUse` on `Write|Edit` runs lint (for `routes/`, `db/`, `tests/` files) and runs tests (for `routes/`, `tests/` files) after the edit already happened, purely for fast feedback. One is preventive: `PreToolUse` on `Bash`, filtered to `git push*`, runs the test suite first and denies the push outright if tests are failing.
+
+**Headless run:** Planned (not executed by me) a `claude -p` invocation to add `DELETE /users/:id` end-to-end — store function, route, tests, docs — self-verified by `npm test`/`npm run lint`. Locked `--allowedTools` down to `Read`, `Edit`, `Bash(npm test:*)`, and `Bash(npm run lint:*)` only: no `Write` (no new files needed), no bare `Bash`, and no `Bash(git *)`, so the run could implement and verify the change but could never stage, commit, or push on its own.

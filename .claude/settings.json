@@ -1,0 +1,38 @@
+{
+  "permissions": {
+    "allow": ["mcp__tracker__list_issues", "mcp__tracker__get_issue"],
+    "deny": ["mcp__tracker__delete_issue"]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/lint-on-edit.js",
+            "statusMessage": "Linting changed route/store/test file..."
+          },
+          {
+            "type": "command",
+            "command": "node .claude/hooks/test-on-edit.js",
+            "statusMessage": "Running tests for changed route/test file..."
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/block-push-on-failing-tests.js",
+            "if": "Bash(git push*)",
+            "statusMessage": "Verifying tests pass before push..."
+          }
+        ]
+      }
+    ]
+  }
+}
