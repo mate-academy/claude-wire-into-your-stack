@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__docs__read_text_file",
+      "mcp__docs__read_multiple_files",
+      "mcp__docs__list_directory",
+      "mcp__docs__list_directory_with_sizes",
+      "mcp__docs__directory_tree",
+      "mcp__docs__search_files",
+      "mcp__docs__get_file_info",
+      "mcp__docs__list_allowed_directories"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/lint-check.sh"
+          }
+        ]
+      }
+    ]
+  }
+}
