@@ -1,0 +1,5 @@
+- The mcp server connected to the filesystem server attached to the docs folder to provide documentation for the project. I added permissions to only allow its read tools and deny others.
+- I added a skill to scaffold a new route. It uses the Read tools to read the existing routes and the Write tools to create the new route files.
+- I added a command to scaffold a new route. It uses the Read tools to read the existing routes and the Write tools to create the new route files.
+- I added a pre-push hook to lint the code before pushing, and a hook to block pushing to main.
+- I run a headless command to scaffold a new route, but only allowed the Read tools to run. It wasn't successful because the command was trying to use the Write tools to create the route files.

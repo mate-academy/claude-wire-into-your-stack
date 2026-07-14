@@ -70,12 +70,12 @@ In a short `NOTES.md`, answer in a few sentences each:
 
 ### Definition of done
  
-- [ ] a server is connected at project scope (committed `.mcp.json`), with a permission rule scoping what it may do, and you've used it at least once
-- [ ] a project skill exists in `.claude/skills/`, with a description that triggers on the right request, and you confirmed it fires
-- [ ] a custom command exists in `.claude/commands/` and runs the way you intended
-- [ ] a hook is set at project scope (committed `.claude/settings.json`) and fires on its event
-- [ ] one task run headless with a scoped `--allowedTools`
-- [ ] `NOTES.md` committed, explaining each choice
+- [X] a server is connected at project scope (committed `.mcp.json`), with a permission rule scoping what it may do, and you've used it at least once
+- [X] a project skill exists in `.claude/skills/`, with a description that triggers on the right request, and you confirmed it fires
+- [X] a custom command exists in `.claude/commands/` and runs the way you intended
+- [X] a hook is set at project scope (committed `.claude/settings.json`) and fires on its event
+- [X] one task run headless with a scoped `--allowedTools`
+- [X] `NOTES.md` committed, explaining each choice
 
 ### Submit
  
@@ -87,9 +87,9 @@ In a short `NOTES.md`, answer in a few sentences each:
 3. Open a pull request against the main repository, not your fork, and submit it through the platform, which copies your branch for review.
 Before you submit, make sure that:
  
-- [ ] only the intended files are in the PR — the `.mcp.json`, the `.claude/` files, and `NOTES.md` — with no secrets committed
-- [ ] the skill fires, the command runs, and the hook triggers on a fresh checkout
-- [ ] `NOTES.md` explains each choice
+- [X] only the intended files are in the PR — the `.mcp.json`, the `.claude/` files, and `NOTES.md` — with no secrets committed
+- [X] the skill fires, the command runs, and the hook triggers on a fresh checkout
+- [X] `NOTES.md` explains each choice
 ---
  
 **How this is checked:** a reviewer clones your branch and checks that Claude comes wired — the server connects, the skill fires on the right request, the command runs, the hook holds — and reads `NOTES.md` for your reasoning.
