@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "docs-filesystem": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "/Users/iago/Workspaces/ws-learn/claude/claude-wire-into-your-stack/docs"]
+    }
+  }
+}

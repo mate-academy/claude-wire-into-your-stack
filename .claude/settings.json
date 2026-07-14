@@ -1,0 +1,24 @@
+{
+  "enableAllProjectMcpServers": false,
+  "enabledMcpjsonServers": ["docs-filesystem"],
+  "permissions": {
+    "allow": [
+      "mcp__docs-filesystem__read_file",
+      "mcp__docs-filesystem__read_text_file",
+      "mcp__docs-filesystem__read_media_file",
+      "mcp__docs-filesystem__read_multiple_files",
+      "mcp__docs-filesystem__list_directory",
+      "mcp__docs-filesystem__list_directory_with_sizes",
+      "mcp__docs-filesystem__directory_tree",
+      "mcp__docs-filesystem__search_files",
+      "mcp__docs-filesystem__get_file_info",
+      "mcp__docs-filesystem__list_allowed_directories"
+    ],
+    "deny": [
+      "mcp__docs-filesystem__write_file",
+      "mcp__docs-filesystem__edit_file",
+      "mcp__docs-filesystem__create_directory",
+      "mcp__docs-filesystem__move_file"
+    ]
+  }
+}
