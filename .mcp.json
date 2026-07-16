@@ -1,0 +1,28 @@
+{
+  "mcpServers": {
+    "docs_fs": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "docs"
+      ],
+      "env": {}
+    }
+  },
+  "permissions": {
+    "allow": [
+      "mcp__docs_fs__list_directory",
+      "mcp__docs_fs__read_file",
+      "mcp__docs_fs__search_files",
+      "mcp__docs_fs__get_file_info"
+    ],
+    "deny": [
+      "mcp__docs_fs__write_file",
+      "mcp__docs_fs__edit_file",
+      "mcp__docs_fs__create_directory",
+      "mcp__docs_fs__move_file"
+    ]
+  }
+}
