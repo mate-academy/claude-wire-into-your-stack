@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "filesystem": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "C:\\Users\\rober\\kodree\\claude-wire-into-your-stack"
+      ],
+      "env": {}
+    }
+  }
+}
