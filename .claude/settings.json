@@ -9,5 +9,18 @@
       "mcp__docs-fs__get_file_info",
       "mcp__docs-fs__list_allowed_directories"
     ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/post-edit-lint.js"
+          }
+        ]
+      }
+    ]
   }
 }
