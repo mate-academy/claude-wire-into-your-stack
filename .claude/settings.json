@@ -1,0 +1,32 @@
+{
+  "enabledPlugins": {
+    "claude-md-management@claude-plugins-official": true
+  },
+  "permissions": {
+    "allow": [
+      "mcp__docs-fs__read_text_file",
+      "mcp__docs-fs__list_directory",
+      "mcp__docs-fs__search_files",
+      "mcp__docs-fs__get_file_info"
+    ],
+    "deny": [
+      "mcp__docs-fs__write_file",
+      "mcp__docs-fs__edit_file",
+      "mcp__docs-fs__create_directory",
+      "mcp__docs-fs__move_file"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "input=$(cat); file=$(echo \"$input\" | jq -r '.tool_input.file_path // empty'); case \"$file\" in *routes/*.js|*db/*.js|*tests/*.js) npx eslint --fix \"$file\" ;; esac"
+          }
+        ]
+      }
+    ]
+  }
+}
