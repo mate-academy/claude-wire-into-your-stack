@@ -1,0 +1,14 @@
+#!/bin/bash
+COMMAND=$(jq -r '.tool_input.command')
+
+if echo "$COMMAND" | grep -q 'rm -rf'; then
+  jq -n '{
+    hookSpecificOutput: {
+      hookEventName: "PreToolUse",
+      permissionDecision: "deny",
+      permissionDecisionReason: "Destructive command blocked by hook"
+    }
+  }'
+else
+  exit 0
+fi
