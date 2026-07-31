@@ -11,11 +11,13 @@
     "lint": "eslint server.js routes db tests"
   },
   "dependencies": {
-    "express": "^4.19.2"
+    "@modelcontextprotocol/sdk": "^1.30.0",
+    "express": "^4.19.2",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
-    "eslint": "^9.13.0",
     "@eslint/js": "^9.13.0",
+    "eslint": "^9.13.0",
     "supertest": "^7.0.0"
   }
 }
