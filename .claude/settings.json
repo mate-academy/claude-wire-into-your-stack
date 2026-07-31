@@ -1,4 +1,8 @@
 {
+  "enabledMcpjsonServers": ["weather"],
+  "permissions": {
+    "allow": ["mcp__weather__get_weather"]
+  },
   "hooks": {
     "PostToolUse": [
       {
