@@ -14,6 +14,16 @@
       "env": {
         "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_PERSONAL_ACCESS_TOKEN}"
       }
+    },
+    "filesystem": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "./docs"],
+      "permissions": {
+        "tools": {
+          "allow": ["filesystem/read_file", "filesystem/list_directory"]
+        }
+      }
     }
   }
 }
