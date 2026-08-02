@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__docs__read_file",
+      "mcp__docs__read_multiple_files",
+      "mcp__docs__list_directory",
+      "mcp__docs__directory_tree",
+      "mcp__docs__search_files",
+      "mcp__docs__get_file_info",
+      "mcp__docs__list_allowed_directories"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -r '.tool_input.command' | { read -r cmd; case \"$cmd\" in *\"rm -rf\"*|*\"--force\"*|*\"git reset --hard\"*) echo '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"deny\",\"permissionDecisionReason\":\"Blocked by project hook: destructive command requires manual confirmation\"}}' ;; esac; }"
+          }
+        ]
+      }
+    ]
+  }
+}
