@@ -16,6 +16,7 @@ test('GET /users returns the seeded list', async () => {
 test('GET /users/:id returns 404 for a missing user', async () => {
   const res = await request(app).get('/users/999');
   assert.equal(res.status, 404);
+  assert.equal(res.body.error, 'User not found');
 });
 
 test('POST /users creates a user', async () => {
@@ -36,6 +37,7 @@ test('PUT /users/:id updates an existing user', async () => {
 test('PUT /users/:id returns 404 for a missing user', async () => {
   const res = await request(app).put('/users/999').send({ name: 'Nobody' });
   assert.equal(res.status, 404);
+  assert.equal(res.body.error, 'User not found');
 });
 
 // Express 5 no longer initialises req.body to {} when no body parser ran, so an
