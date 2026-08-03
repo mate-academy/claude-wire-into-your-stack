@@ -27,6 +27,11 @@ test('POST /users creates a user', async () => {
   assert.ok(res.body.id);
 });
 
+test('POST /users returns 400 when name or email is missing', async () => {
+  const res = await request(app).post('/users').send({ name: 'Grace Hopper' });
+  assert.equal(res.status, 400);
+});
+
 test('PUT /users/:id updates an existing user', async () => {
   const res = await request(app).put('/users/1').send({ name: 'Ada L.' });
   assert.equal(res.status, 200);

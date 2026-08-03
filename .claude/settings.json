@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__docs-fs__read_text_file",
+      "mcp__docs-fs__list_directory",
+      "mcp__docs-fs__search_files"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR/.claude/hooks/lint-fix.sh\""
+          }
+        ]
+      }
+    ]
+  }
+}
