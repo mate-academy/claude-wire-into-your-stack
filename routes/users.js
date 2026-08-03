@@ -19,7 +19,9 @@ router.get('/:id', (req, res) => {
 
 // POST /users — create a user. Requires name and email.
 router.post('/', (req, res) => {
-  const { name, email } = req.body;
+  // Express 5 leaves req.body undefined when no body parser ran (e.g. a request
+  // with a non-JSON content type), so fall back to {} and return 400 as documented.
+  const { name, email } = req.body ?? {};
   if (!name || !email) {
     return res.status(400).json({ error: 'name and email are required' });
   }
@@ -29,7 +31,7 @@ router.post('/', (req, res) => {
 
 // PUT /users/:id — update an existing user (added in Project 2).
 router.put('/:id', (req, res) => {
-  const { name, email } = req.body;
+  const { name, email } = req.body ?? {};
   if (name === undefined && email === undefined) {
     return res.status(400).json({ error: 'name or email is required' });
   }
