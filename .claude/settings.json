@@ -12,5 +12,18 @@
       "mcp__project-docs__create_directory",
       "mcp__project-docs__move_file"
     ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/eslint-fix.js\""
+          }
+        ]
+      }
+    ]
   }
 }
