@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__project-docs__read_text_file",
+      "mcp__project-docs__list_directory",
+      "mcp__project-docs__search_files",
+      "mcp__project-docs__get_file_info"
+    ],
+    "deny": [
+      "mcp__project-docs__write_file",
+      "mcp__project-docs__edit_file",
+      "mcp__project-docs__create_directory",
+      "mcp__project-docs__move_file"
+    ]
+  }
+}
