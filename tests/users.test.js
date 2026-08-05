@@ -27,6 +27,44 @@ test('POST /users creates a user', async () => {
   assert.ok(res.body.id);
 });
 
+test('POST /users/bulk creates multiple users', async () => {
+  const res = await request(app)
+    .post('/users/bulk')
+    .send({
+      users: [
+        { name: 'Grace Hopper', email: 'grace@example.com' },
+        { name: 'Margaret Hamilton', email: 'margaret@example.com' },
+      ],
+    });
+  assert.equal(res.status, 201);
+  assert.ok(Array.isArray(res.body));
+  assert.equal(res.body.length, 2);
+  assert.equal(res.body[0].name, 'Grace Hopper');
+  assert.equal(res.body[1].name, 'Margaret Hamilton');
+});
+
+test('POST /users/bulk returns 400 for a missing users field', async () => {
+  const res = await request(app).post('/users/bulk').send({});
+  assert.equal(res.status, 400);
+});
+
+test('POST /users/bulk returns 400 for an empty users array', async () => {
+  const res = await request(app).post('/users/bulk').send({ users: [] });
+  assert.equal(res.status, 400);
+});
+
+test('POST /users/bulk returns 400 when an item is missing a field', async () => {
+  const res = await request(app)
+    .post('/users/bulk')
+    .send({
+      users: [
+        { name: 'Grace Hopper', email: 'grace@example.com' },
+        { name: 'No Email' },
+      ],
+    });
+  assert.equal(res.status, 400);
+});
+
 test('PUT /users/:id updates an existing user', async () => {
   const res = await request(app).put('/users/1').send({ name: 'Ada L.' });
   assert.equal(res.status, 200);
@@ -35,5 +73,18 @@ test('PUT /users/:id updates an existing user', async () => {
 
 test('PUT /users/:id returns 404 for a missing user', async () => {
   const res = await request(app).put('/users/999').send({ name: 'Nobody' });
+  assert.equal(res.status, 404);
+});
+
+test('DELETE /users/:id removes an existing user', async () => {
+  const res = await request(app).delete('/users/1');
+  assert.equal(res.status, 204);
+
+  const getRes = await request(app).get('/users/1');
+  assert.equal(getRes.status, 404);
+});
+
+test('DELETE /users/:id returns 404 for a missing user', async () => {
+  const res = await request(app).delete('/users/999');
   assert.equal(res.status, 404);
 });
