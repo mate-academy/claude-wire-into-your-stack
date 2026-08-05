@@ -27,6 +27,22 @@ router.post('/', (req, res) => {
   return res.status(201).json(user);
 });
 
+// POST /users/bulk — create multiple users from a JSON array. Requires a
+// non-empty `users` array; every item must have name and email, or the
+// whole batch is rejected.
+router.post('/bulk', (req, res) => {
+  const { users } = req.body;
+  if (!Array.isArray(users) || users.length === 0) {
+    return res.status(400).json({ error: 'users must be a non-empty array' });
+  }
+  const invalid = users.some((user) => !user || !user.name || !user.email);
+  if (invalid) {
+    return res.status(400).json({ error: 'each user requires name and email' });
+  }
+  const created = store.createUsers(users);
+  return res.status(201).json(created);
+});
+
 // PUT /users/:id — update an existing user (added in Project 2).
 router.put('/:id', (req, res) => {
   const { name, email } = req.body;
@@ -38,6 +54,15 @@ router.put('/:id', (req, res) => {
     return res.status(404).json({ error: 'User not found' });
   }
   return res.json(user);
+});
+
+// DELETE /users/:id — delete an existing user.
+router.delete('/:id', (req, res) => {
+  const deleted = store.deleteUser(Number(req.params.id));
+  if (!deleted) {
+    return res.status(404).json({ error: 'User not found' });
+  }
+  return res.status(204).send();
 });
 
 module.exports = router;
