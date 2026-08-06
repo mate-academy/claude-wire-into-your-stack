@@ -14,4 +14,11 @@ case "$FILE_PATH" in
 esac
 
 # Run ESLint --fix from the project root so it finds the config.
-cd "$CLAUDE_PROJECT_DIR" && npx eslint --fix "$FILE_PATH"
+# Use the local eslint binary if installed; fall back gracefully otherwise
+# so that a missing dependency never blocks the user's edit.
+cd "$CLAUDE_PROJECT_DIR" || exit 0
+if [ -x "./node_modules/.bin/eslint" ]; then
+  ./node_modules/.bin/eslint --fix "$FILE_PATH" || true
+else
+  npx --no-install eslint --fix "$FILE_PATH" 2>/dev/null || true
+fi
