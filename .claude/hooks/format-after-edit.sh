@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 # Auto-formats JavaScript files after Edit/Write tools using ESLint --fix.
 # Fires on PostToolUse for Edit and Write matchers.
+#
+# Event:    PostToolUse  (react after edit succeeds, not block)
+# Matcher:  Edit|Write   (all file-content modification tools)
+# Command:  eslint --fix  (the project's existing linter serves as auto-formatter)
 
 # Extract the file path from the hook's JSON input on stdin.
 # Uses node (guaranteed available in this project) instead of jq.
