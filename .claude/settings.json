@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__docs-fs__read_text_file",
+      "mcp__docs-fs__read_multiple_files",
+      "mcp__docs-fs__list_directory",
+      "mcp__docs-fs__list_directory_with_sizes",
+      "mcp__docs-fs__directory_tree",
+      "mcp__docs-fs__search_files",
+      "mcp__docs-fs__get_file_info",
+      "mcp__docs-fs__list_allowed_directories"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/guard-destructive-git.sh\""
+          }
+        ]
+      }
+    ]
+  }
+}
