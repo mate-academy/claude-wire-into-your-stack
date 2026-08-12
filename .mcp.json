@@ -2,7 +2,7 @@
   "mcpServers": {
     "docs-fs": {
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-filesystem", "${CLAUDE_PROJECT_DIR}/docs"]
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "./docs"]
     }
   }
 }
