@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__docs-fs__read_text_file",
+      "mcp__docs-fs__list_directory"
+    ]
+  }
+}
