@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "docsfs": {
+      "type": "stdio",
+      "command": "cmd",
+      "args": [
+        "/c",
+        "npx",
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "docs"
+      ],
+      "env": {}
+    }
+  }
+}
