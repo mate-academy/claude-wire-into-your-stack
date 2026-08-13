@@ -41,3 +41,13 @@ Added `.claude/settings.json` (project scope) with two hooks:
 ### Why
 
 Both hooks encode safety/consistency conventions this project cares about without relying on remembering to run them manually: formatting stays consistent automatically, and destructive commands get a guardrail before they run.
+
+## Resource: categories
+
+Added a `categories` resource (`id`, `name`, `description`) using the `new-resource` skill: store helpers in `db/store.js`, `routes/categories.js`, mounted in `server.js`, tests in `tests/categories.test.js`, and a docs section in `docs/api.md`. Seeded with two example categories (Engineering, Design). `npm test` and `npm run lint` both pass.
+
+### Why
+
+Chosen as a simple, generic resource to demonstrate the scaffolding pattern end to end without adding domain complexity.
+
+This prompt was run via `claude -p` with `--allowedTools "Edit,Write,Bash(npm run lint:*),Bash(npm test:*)"`, scoping it to editing/writing files and running lint/tests — no broad shell or network access needed to scaffold a resource.
