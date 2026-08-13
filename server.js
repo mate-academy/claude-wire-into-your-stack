@@ -1,12 +1,14 @@
 const express = require('express');
 const usersRouter = require('./routes/users');
 const healthRouter = require('./routes/health');
+const categoriesRouter = require('./routes/categories');
 
 const app = express();
 app.use(express.json());
 
 app.use('/health', healthRouter);
 app.use('/users', usersRouter);
+app.use('/categories', categoriesRouter);
 
 const PORT = process.env.PORT || 3000;
 

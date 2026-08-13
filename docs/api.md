@@ -32,3 +32,22 @@ Creates a user. Body requires `name` and `email`; returns `201` with the created
 
 ### PUT /users/:id
 Updates an existing user. Body may include `name`, `email`, or both. Returns the updated user, `400` if neither field is given, or `404` if the user does not exist.
+
+## Categories
+
+A category looks like:
+```json
+{ "id": 1, "name": "Engineering", "description": "Software and infrastructure work" }
+```
+
+### GET /categories
+Returns an array of all categories.
+
+### GET /categories/:id
+Returns a single category, or `404` if no category has that id.
+
+### POST /categories
+Creates a category. Body requires `name` and `description`; returns `201` with the created category, or `400` if either field is missing.
+
+### PUT /categories/:id
+Updates an existing category. Body may include `name`, `description`, or both. Returns the updated category, `400` if neither field is given, or `404` if the category does not exist.

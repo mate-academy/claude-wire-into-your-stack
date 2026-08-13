@@ -1,0 +1,53 @@
+# Notes
+
+## MCP server: GitHub
+
+Added the GitHub MCP server (`https://api.githubcopilot.com/mcp/`) at **project scope**, so it's committed in `.mcp.json` and shared with anyone who clones this repo.
+
+### Why GitHub
+
+This repo already lives on GitHub and has a CI workflow (`.github/workflows/ci.yml`) that runs lint and tests on every push and pull request. A GitHub MCP server lets Claude read and act on that context directly — inspect PR status, check CI run results, read/create issues, and comment on PRs — without pasting URLs or `gh` CLI output back into the conversation.
+
+Other options were considered and set aside for now:
+- **Postman/OpenAPI-style MCP** — would help keep `docs/api.md` in sync with the live API by hitting the running dev server, but isn't needed until the docs start drifting from behavior.
+- **Database MCP (Postgres/SQLite)** — not applicable yet since `db/store.js` is a plain in-memory store; worth revisiting if the project migrates to a real database.
+
+### Scope choice
+
+Project scope (`--scope project`, stored in `.mcp.json`) rather than local or user scope, since this server is useful to anyone working on this repo, not just this machine/user.
+
+## Skill: new-resource
+
+Added `.claude/skills/new-resource/SKILL.md`, a project-scoped skill that scaffolds a new REST resource end to end: store helpers in `db/store.js`, a route file in `routes/`, mounting in `server.js`, tests in `tests/`, and a docs section in `docs/api.md`.
+
+### Why
+
+This repo has a very consistent, repeatable pattern for adding a resource (see `users`) — the same CRUD shape, the same `400`/`404` validation rules, the same `{ "error": "message" }` error format. Rather than re-explaining those conventions every time a new resource is added during the course, the skill encodes them once so scaffolding a resource is a single command instead of a multi-file, easy-to-drift-from-convention manual process.
+
+## Command: /check
+
+Added `.claude/commands/check.md`, a slash command that runs `npm run lint` then `npm test`, in the same order as `.github/workflows/ci.yml`.
+
+### Why
+
+Lint + test is the exact check CI runs on every push and PR, and it's the natural thing to run before committing. Bundling both into one command saves re-typing the pair each time and keeps the local check aligned with what CI actually enforces.
+
+## Hooks: auto-format and command guard
+
+Added `.claude/settings.json` (project scope) with two hooks:
+- **Stop hook** — runs `eslint --fix` over `server.js routes db tests` so lint fixes are applied automatically.
+- **PreToolUse hook on Bash** — blocks a set of risky command patterns (`rm -rf /`, `git push --force`, `git reset --hard`, `git clean -f`, `chmod -R 777 /`, `mkfs`, `dd ... of=/dev/...`) before they execute.
+
+### Why
+
+Both hooks encode safety/consistency conventions this project cares about without relying on remembering to run them manually: formatting stays consistent automatically, and destructive commands get a guardrail before they run.
+
+## Resource: categories
+
+Added a `categories` resource (`id`, `name`, `description`) using the `new-resource` skill: store helpers in `db/store.js`, `routes/categories.js`, mounted in `server.js`, tests in `tests/categories.test.js`, and a docs section in `docs/api.md`. Seeded with two example categories (Engineering, Design). `npm test` and `npm run lint` both pass.
+
+### Why
+
+Chosen as a simple, generic resource to demonstrate the scaffolding pattern end to end without adding domain complexity.
+
+This prompt was run via `claude -p` with `--allowedTools "Edit,Write,Bash(npm run lint:*),Bash(npm test:*)"`, scoping it to editing/writing files and running lint/tests — no broad shell or network access needed to scaffold a resource.
