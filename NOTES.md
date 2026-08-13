@@ -15,3 +15,11 @@ Other options were considered and set aside for now:
 ### Scope choice
 
 Project scope (`--scope project`, stored in `.mcp.json`) rather than local or user scope, since this server is useful to anyone working on this repo, not just this machine/user.
+
+## Skill: new-resource
+
+Added `.claude/skills/new-resource/SKILL.md`, a project-scoped skill that scaffolds a new REST resource end to end: store helpers in `db/store.js`, a route file in `routes/`, mounting in `server.js`, tests in `tests/`, and a docs section in `docs/api.md`.
+
+### Why
+
+This repo has a very consistent, repeatable pattern for adding a resource (see `users`) — the same CRUD shape, the same `400`/`404` validation rules, the same `{ "error": "message" }` error format. Rather than re-explaining those conventions every time a new resource is added during the course, the skill encodes them once so scaffolding a resource is a single command instead of a multi-file, easy-to-drift-from-convention manual process.
