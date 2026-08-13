@@ -23,3 +23,11 @@ Added `.claude/skills/new-resource/SKILL.md`, a project-scoped skill that scaffo
 ### Why
 
 This repo has a very consistent, repeatable pattern for adding a resource (see `users`) — the same CRUD shape, the same `400`/`404` validation rules, the same `{ "error": "message" }` error format. Rather than re-explaining those conventions every time a new resource is added during the course, the skill encodes them once so scaffolding a resource is a single command instead of a multi-file, easy-to-drift-from-convention manual process.
+
+## Command: /check
+
+Added `.claude/commands/check.md`, a slash command that runs `npm run lint` then `npm test`, in the same order as `.github/workflows/ci.yml`.
+
+### Why
+
+Lint + test is the exact check CI runs on every push and PR, and it's the natural thing to run before committing. Bundling both into one command saves re-typing the pair each time and keeps the local check aligned with what CI actually enforces.
