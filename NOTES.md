@@ -31,3 +31,13 @@ Added `.claude/commands/check.md`, a slash command that runs `npm run lint` then
 ### Why
 
 Lint + test is the exact check CI runs on every push and PR, and it's the natural thing to run before committing. Bundling both into one command saves re-typing the pair each time and keeps the local check aligned with what CI actually enforces.
+
+## Hooks: auto-format and command guard
+
+Added `.claude/settings.json` (project scope) with two hooks:
+- **Stop hook** — runs `eslint --fix` over `server.js routes db tests` so lint fixes are applied automatically.
+- **PreToolUse hook on Bash** — blocks a set of risky command patterns (`rm -rf /`, `git push --force`, `git reset --hard`, `git clean -f`, `chmod -R 777 /`, `mkfs`, `dd ... of=/dev/...`) before they execute.
+
+### Why
+
+Both hooks encode safety/consistency conventions this project cares about without relying on remembering to run them manually: formatting stays consistent automatically, and destructive commands get a guardrail before they run.

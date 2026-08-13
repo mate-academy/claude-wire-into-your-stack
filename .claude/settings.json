@@ -1,0 +1,27 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "npx eslint --fix server.js routes db tests 2>/dev/null || true",
+            "statusMessage": "Auto-formatting with eslint..."
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -r '.tool_input.command' | { read -r cmd; if echo \"$cmd\" | grep -Eiq '(^|[;&|]) *rm +-[a-z]*r[a-z]*f[a-z]* +(/($| )|~($| )|\\*($| )|\\.($| ))|(^|[;&|]) *rm +-[a-z]*f[a-z]*r[a-z]* +(/($| )|~($| )|\\*($| )|\\.($| ))|git +push[^;&|]*(--force\\b|-f\\b)|git +reset +--hard|git +clean +-[a-z]*f|chmod +-R +777 +/|mkfs\\.|dd +[^;&|]*of=/dev/'; then jq -n --arg cmd \"$cmd\" '{hookSpecificOutput:{hookEventName:\"PreToolUse\",permissionDecision:\"deny\",permissionDecisionReason:(\"Blocked risky command: \" + $cmd)}}'; else echo '{}'; fi; }",
+            "statusMessage": "Checking command safety..."
+          }
+        ]
+      }
+    ]
+  }
+}
