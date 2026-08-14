@@ -27,6 +27,11 @@ test('POST /users creates a user', async () => {
   assert.ok(res.body.id);
 });
 
+test('POST /users returns 400 when name or email is missing', async () => {
+  const res = await request(app).post('/users').send({ name: 'Grace Hopper' });
+  assert.equal(res.status, 400);
+});
+
 test('PUT /users/:id updates an existing user', async () => {
   const res = await request(app).put('/users/1').send({ name: 'Ada L.' });
   assert.equal(res.status, 200);
@@ -36,4 +41,9 @@ test('PUT /users/:id updates an existing user', async () => {
 test('PUT /users/:id returns 404 for a missing user', async () => {
   const res = await request(app).put('/users/999').send({ name: 'Nobody' });
   assert.equal(res.status, 404);
+});
+
+test('PUT /users/:id returns 400 when neither name nor email is given', async () => {
+  const res = await request(app).put('/users/1').send({});
+  assert.equal(res.status, 400);
 });
