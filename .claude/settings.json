@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__docs-filesystem__read_file",
+      "mcp__docs-filesystem__read_multiple_files",
+      "mcp__docs-filesystem__list_directory",
+      "mcp__docs-filesystem__search_files",
+      "mcp__docs-filesystem__get_file_info",
+      "mcp__docs-filesystem__list_allowed_directories"
+    ]
+  }
+}
