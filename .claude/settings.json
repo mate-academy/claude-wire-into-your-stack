@@ -8,5 +8,18 @@
       "mcp__docs-filesystem__get_file_info",
       "mcp__docs-filesystem__list_allowed_directories"
     ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/lint-fix.sh\""
+          }
+        ]
+      }
+    ]
   }
 }
