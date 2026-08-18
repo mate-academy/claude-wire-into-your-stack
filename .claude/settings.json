@@ -1,0 +1,5 @@
+{
+  "permissions": {
+    "allow": ["mcp__docs__read_file", "mcp__docs__list_directory"]
+  }
+}
