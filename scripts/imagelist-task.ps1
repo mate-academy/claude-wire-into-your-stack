@@ -1,0 +1,1 @@
+cd 'C:\Users\Jari\claude-wire-into-your-stack'; claude -p imagelist *> "scripts\imagelist-task.log"
