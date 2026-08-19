@@ -2,7 +2,7 @@ const express = require('express');
 
 const router = express.Router();
 
-// GET /health — a simple liveness check.
+// Health check endpoint used to verify the API is running and report uptime
 router.get('/', (req, res) => {
   res.json({ status: 'ok', uptime: process.uptime() });
 });
