@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "filesystem": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/Users/olcay.sevim/AIBasedConformityAssessment/GH git play ground/claude-wire-into-your-stack/docs"
+      ],
+      "env": {}
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/no-direct-db-write.sh",
+            "timeout": 10,
+            "statusMessage": "Checking for direct database writes..."
+          }
+        ]
+      },
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/no-direct-db-write.sh",
+            "timeout": 10,
+            "statusMessage": "Checking route files stay stateless..."
+          }
+        ]
+      }
+    ]
+  }
+}
