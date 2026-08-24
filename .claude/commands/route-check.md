@@ -5,7 +5,9 @@ allowed-tools: Read, Grep, Glob
 ---
 
 Audit the **$ARGUMENTS** resource of this API. This is a read-only review —
-report findings, do not edit any files.
+report findings, do not edit any files. Read the source directly; do not run
+shell commands (no `npm test`, no `git`) - judge test coverage from the test
+file itself.
 
 Read `routes/$ARGUMENTS.js`, the helpers it calls in `db/store.js`, how it is
 mounted in `server.js`, and the `$ARGUMENTS` section of `docs/api.md`.
