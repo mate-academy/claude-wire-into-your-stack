@@ -1,0 +1,33 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__github__list_pull_requests"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Read",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -r '.tool_input.file_path' | { read -r f; case \"$(basename \"$f\")\" in .env|.env.*) echo '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"deny\",\"permissionDecisionReason\":\"Reading .env files is blocked by policy\"}}';; esac; }"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -r '.tool_input.command' | { read -r c; if echo \"$c\" | grep -Eq '\\.env([^A-Za-z0-9_-]|$)'; then echo '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"deny\",\"permissionDecisionReason\":\"Access to .env files via Bash is blocked by policy\"}}'; fi; }"
+          },
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PROJECT_DIR:-.}/.claude/hooks/block-force-push-main.sh\""
+          }
+        ]
+      }
+    ]
+  }
+}
