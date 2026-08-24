@@ -51,3 +51,22 @@ Creates a task. Body requires `user_id` and `description`; returns `201` with th
 
 ### PUT /tasks/:id
 Updates an existing task. Body may include `user_id`, `description`, or both. Returns the updated task, `400` if neither field is given, or `404` if the task does not exist.
+
+## Roles
+
+A role looks like:
+```json
+{ "id": 1, "title": "Admin", "description": "Full access to all resources" }
+```
+
+### GET /roles
+Returns an array of all roles.
+
+### GET /roles/:id
+Returns a single role, or `404` if no role has that id.
+
+### POST /roles
+Creates a role. Body requires `title` and `description`; returns `201` with the created role, or `400` if either field is missing.
+
+### PUT /roles/:id
+Updates an existing role. Body may include `title`, `description`, or both. Returns the updated role, `400` if neither field is given, or `404` if the role does not exist.

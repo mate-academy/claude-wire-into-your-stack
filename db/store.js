@@ -7,6 +7,9 @@ let nextId = 1;
 let tasks = [];
 let nextTaskId = 1;
 
+let roles = [];
+let nextRoleId = 1;
+
 function seed() {
   users = [
     { id: 1, name: 'Ada Lovelace', email: 'ada@example.com' },
@@ -19,6 +22,12 @@ function seed() {
     { id: 2, user_id: 2, description: 'Break the Enigma code' },
   ];
   nextTaskId = 3;
+
+  roles = [
+    { id: 1, title: 'Admin', description: 'Full access to all resources' },
+    { id: 2, title: 'Viewer', description: 'Read-only access to resources' },
+  ];
+  nextRoleId = 3;
 }
 seed();
 
@@ -68,6 +77,29 @@ function updateTask(id, fields) {
   return task;
 }
 
+function listRoles() {
+  return roles;
+}
+
+function getRole(id) {
+  return roles.find((role) => role.id === id);
+}
+
+function createRole({ title, description }) {
+  const role = { id: nextRoleId, title, description };
+  nextRoleId += 1;
+  roles.push(role);
+  return role;
+}
+
+function updateRole(id, fields) {
+  const role = getRole(id);
+  if (!role) return undefined;
+  if (fields.title !== undefined) role.title = fields.title;
+  if (fields.description !== undefined) role.description = fields.description;
+  return role;
+}
+
 // Reset to the seed data. Used by the tests so each one starts clean.
 function reset() {
   seed();
@@ -82,5 +114,9 @@ module.exports = {
   getTask,
   createTask,
   updateTask,
+  listRoles,
+  getRole,
+  createRole,
+  updateRole,
   reset,
 };
