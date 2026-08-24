@@ -32,3 +32,22 @@ Creates a user. Body requires `name` and `email`; returns `201` with the created
 
 ### PUT /users/:id
 Updates an existing user. Body may include `name`, `email`, or both. Returns the updated user, `400` if neither field is given, or `404` if the user does not exist.
+
+## Tasks
+
+A task looks like:
+```json
+{ "id": 1, "user_id": 1, "description": "Write the analytical engine paper" }
+```
+
+### GET /tasks
+Returns an array of all tasks.
+
+### GET /tasks/:id
+Returns a single task, or `404` if no task has that id.
+
+### POST /tasks
+Creates a task. Body requires `user_id` and `description`; returns `201` with the created task, or `400` if either field is missing.
+
+### PUT /tasks/:id
+Updates an existing task. Body may include `user_id`, `description`, or both. Returns the updated task, `400` if neither field is given, or `404` if the task does not exist.

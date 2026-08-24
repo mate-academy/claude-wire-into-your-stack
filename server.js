@@ -1,5 +1,6 @@
 const express = require('express');
 const usersRouter = require('./routes/users');
+const tasksRouter = require('./routes/tasks');
 const healthRouter = require('./routes/health');
 
 const app = express();
@@ -7,6 +8,7 @@ app.use(express.json());
 
 app.use('/health', healthRouter);
 app.use('/users', usersRouter);
+app.use('/tasks', tasksRouter);
 
 const PORT = process.env.PORT || 3000;
 
