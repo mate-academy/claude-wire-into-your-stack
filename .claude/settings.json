@@ -1,0 +1,28 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__api-docs__read_text_file",
+      "mcp__api-docs__list_directory",
+      "mcp__api-docs__search_files"
+    ],
+    "deny": [
+      "mcp__api-docs__write_file",
+      "mcp__api-docs__edit_file",
+      "mcp__api-docs__create_directory",
+      "mcp__api-docs__move_file"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/lint-changed.js"
+          }
+        ]
+      }
+    ]
+  }
+}
