@@ -11,5 +11,20 @@
       "mcp__docs__move_file",
       "mcp__docs__create_directory"
     ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/eslint-fix.js",
+            "timeout": 30,
+            "statusMessage": "Linting edited file"
+          }
+        ]
+      }
+    ]
   }
 }
