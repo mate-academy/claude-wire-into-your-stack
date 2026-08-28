@@ -7,7 +7,7 @@ All request and response bodies are JSON. Errors come back as `{ "error": "messa
 ## Health
 
 ### GET /health
-Returns the service status.
+Returns the service status. 
 
 Response `200`:
 ```json

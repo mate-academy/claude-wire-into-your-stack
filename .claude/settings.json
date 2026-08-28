@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(./**)",
+      "mcp__docs-filesystem__read_text_file",
+      "mcp__docs-filesystem__list_directory",
+      "mcp__docs-filesystem__get_file_info"
+    ],
+    "deny": [
+      "Read(.env)",
+      "Read(.env.*)",
+      "Bash(git push --force:*)",
+      "Bash(*rm *..*)",
+      "Bash(rmdir *..*)",
+      "Bash(*rm /*)",
+      "Bash(*rm ~/*)",
+      "Read(~/*)",
+      "Bash(curl*)",
+      "Bash(wget*)",
+      "Bash(curl | sh)"
+    ]
+  }
+}
