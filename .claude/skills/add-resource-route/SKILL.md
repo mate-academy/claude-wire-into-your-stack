@@ -26,4 +26,5 @@ the API.
 5. **Docs** — update `docs/api.md` with the new resource's shape and each endpoint, in the
    same style as the existing `Users` section.
 
-After scaffolding, run `npm test` and `npm run lint` to confirm everything passes.
+After scaffolding, run `npm test` to confirm everything passes — linting doesn't need a
+manual step, the project's PostToolUse hook auto-fixes each file as you edit it.
