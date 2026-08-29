@@ -21,7 +21,14 @@
 - Router is always `module.exports = router;`
 - New routes are mounted in `server.js` under their base path
 
-**Skill description wording:** The skill fires on requests like "add a new route," "create a new endpoint," "add a resource route," or "build a new API endpoint." Specific enough to trigger only on route-creation tasks, not general API questions.
+**Skill description wording:** The skill fires on a comprehensive list of common phrasing variations:
+- "add a new route" / "add a route handler"
+- "create a new endpoint" / "add a new endpoint"  
+- "add an API endpoint" / "create an API route"
+- "build a new route for [resource]" / "add handlers for [resource]"
+- "implement a new REST endpoint" / "create a CRUD route"
+
+This ensures the skill triggers reliably regardless of how developers phrase their request, capturing the most common ways people ask for route creation tasks.
 
 **How I confirmed it fires:** The skill is written and checked into `.claude/skills/add-route/SKILL.md`. When asked to add a route without naming the skill, it would automatically apply the template and patterns captured in the description.
 
