@@ -1,6 +1,14 @@
 # Add a new route
 
-When the user asks to add a new endpoint, create a new resource route following the project's established pattern.
+This skill triggers when the user asks to:
+- "Add a new route" or "add a route handler"
+- "Create a new endpoint" or "add a new endpoint"
+- "Add an API endpoint" or "create an API route"
+- "Build a new route for [resource]" or "add handlers for [resource]"
+- "Implement a new REST endpoint" or "create a CRUD route"
+- Any request to add, create, or implement a new HTTP route/endpoint in the Express app
+
+When triggered, create a new resource route following the project's established pattern.
 
 ## Route structure
 
