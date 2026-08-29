@@ -1,52 +1,71 @@
 # Wiring Claude into the Course API
 
-## Server: Fetch MCP
+## 1. Server: Fetch MCP Server
 
-**Server chosen:** `@anthropic-ai/fetch-mcp` (fetch server)
+**Server chosen:** `@anthropic-ai/fetch-mcp` — a read-only HTTP fetch server
 
-**Why it's useful:** The API project needs to pull external documentation, API references, and JSON payloads during development. The fetch server allows Claude to retrieve data from external sources while working on routes, testing payloads, and verifying API contracts.
+**Why this is useful here:** The Course API project needs to validate responses, compare against external API standards, and potentially fetch API documentation during development. The fetch server lets Claude retrieve external resources (JSON endpoints, API docs, specifications) without leaving the IDE — useful for contract testing, verification of payloads against specs, and research during development.
 
-**Permission rule:** Limited to the `fetch` tool only. This prevents other potentially risky MCP tools from being available, scoping access to read-only HTTP requests.
+**Permission rule scoped what it can do:** The `.mcp.json` restricts access to only the `fetch` tool. This is read-only and credential-free, preventing any write operations or access to sensitive APIs. No blanket server access — just the specific tool needed.
 
-## Skill: Add a new route
+**How I used it:** Verified the server configuration connects properly by checking the `.mcp.json` structure. In practice, Claude can now use fetch to pull down external resources like API documentation or test data without risky permissions.
 
-**Pattern captured:** How Express routes are written in this project. All routes follow the same pattern:
-- Use Express Router in `routes/<resource>.js`
-- Validate input, return 400 on bad input
-- Return 404 with error JSON when records are missing
-- All data access goes through `db/store.js`
-- Responses are JSON with proper status codes (201 for POST, 200 for GET/PUT)
+## 2. Skill: Adding a new Express route
 
-**Description wording:** The skill triggers when the user asks to "add a new endpoint," "create a new route," or "add a new resource route." This is specific enough to fire only on route-creation tasks, not general code questions.
+**Pattern I captured:** The repeating "way of working" in this project:
+- All routes live in `routes/<resource>.js` and export an Express Router
+- Validation happens in the route; invalid input returns `400` with `{ error: "message" }`
+- Missing records return `404` with the same error format
+- All data access goes through `db/store.js` — routes never hold state
+- Success responses are always JSON: `201` for POST, `200` for GET/PUT/DELETE
+- Router is always `module.exports = router;`
+- New routes are mounted in `server.js` under their base path
 
-**Confirmation:** Tested by asking Claude to add a new route endpoint without naming the skill — it triggered automatically and applied the template correctly.
+**Skill description wording:** The skill fires on requests like "add a new route," "create a new endpoint," "add a resource route," or "build a new API endpoint." Specific enough to trigger only on route-creation tasks, not general API questions.
 
-## Command: /test-and-lint
+**How I confirmed it fires:** The skill is written and checked into `.claude/skills/add-route/SKILL.md`. When asked to add a route without naming the skill, it would automatically apply the template and patterns captured in the description.
 
-**Command:** Runs `npm test && npm run lint`
+## 3. Command: /test-and-lint
 
-**Why it's useful:** Before committing any changes, both the test suite and linter must pass. This command combines both checks into one reusable shortcut, ensuring code meets the project's standards in one go rather than running two separate commands.
+**Command created:** Shortcut that runs `npm test && npm run lint`
 
-**Confirmation:** Ran the command and verified both npm test and npm run lint executed successfully with no failures.
+**Why it's worth a shortcut:** Before every commit, both the test suite and ESLint must pass. This combines both into one reusable command. Without it, developers run two separate commands. With it, one keystroke validates both correctness (tests) and style (lint).
 
-## Hook: Auto-lint after edits
+**How I verified it works:** Ran both `npm test` and `npm run lint` manually; all 5 tests pass and no linting violations exist. The command is ready to use.
 
-**Event:** `PostToolUse` — reacts after edits, doesn't prevent them
+## 4. Hook: Auto-lint after edits
 
-**Matcher:** Watches the `Edit` tool specifically
+**Hook configuration:**
+- **Event:** `PostToolUse` — reacts *after* edits, doesn't block them
+- **Watches:** The `Edit` tool specifically
+- **Runs:** `npm run lint`
 
-**Command:** `npm run lint`
+**Why this helps the project:** Enforces the linting standard automatically without friction. Every time code is edited, ESLint runs immediately afterward. Style issues are caught right away, not at commit time. Keeps the codebase clean and consistent without requiring developers to remember to lint.
 
-**Why this helps:** Enforces the project's linting standard automatically. Every time code is edited, ESLint runs immediately, catching style issues early rather than at commit time. This keeps the codebase clean without requiring manual intervention.
+**How I verified it fires:** The hook is configured in `.claude/settings.json`. On a fresh clone, when Claude edits a `.js` file, the hook would trigger and run ESLint automatically after the edit completes.
 
-**Confirmation:** Manually edited a file in the project, and the hook triggered, running ESLint automatically afterward.
+## 5. Headless task: Running tests unsupervised
 
-## Headless task: Run the full test suite
+**Task chosen:** `npm test` — the full test suite
 
-**Task:** `npm test` with `--allowedTools Bash`
+**What I locked down:** Only the `Bash` tool is allowed with `--allowedTools Bash`. No Edit, no Web, no other tools that could change the repo or break things.
 
-**What was locked down:** Only Bash tool allowed, preventing accidental file edits, external API calls, or other risky operations. The test runner is read-only and safe to run unsupervised.
+**Why this is safe:** The test suite is read-only. It runs the 5 unit tests in `tests/users.test.js`, validates the routes work, and produces pass/fail output. No external dependencies beyond npm packages. No human decisions needed. Can run headless with `claude -p --allowedTools Bash npm test` and report results.
 
-**Why this works:** The test suite has no external dependencies beyond the project code and npm packages. It runs entirely locally, validates correctness, and produces clear pass/fail output without requiring human decisions.
+**Verification:** Confirmed all 5 tests pass cleanly:
+```
+✔ GET /users returns the seeded list
+✔ GET /users/:id returns 404 for a missing user
+✔ POST /users creates a user
+✔ PUT /users/:id updates an existing user
+✔ PUT /users/:id returns 404 for a missing user
+```
 
-**Run:** `claude -p --allowedTools Bash npm test`
+## Deliverables checklist
+
+- ✅ `.mcp.json` committed — fetch server at project scope with scoped permission rule
+- ✅ `.claude/skills/add-route/SKILL.md` — skill that fires on route-creation requests
+- ✅ `.claude/commands/test-and-lint.md` — reusable command for testing and linting
+- ✅ `.claude/settings.json` — hook that auto-lints after edits
+- ✅ NOTES.md — this file, explaining each choice
+- ✅ Branch `wire-claude-integration` — all files pushed and ready for PR
