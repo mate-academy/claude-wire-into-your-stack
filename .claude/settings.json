@@ -1,0 +1,6 @@
+{
+  "enabledMcpjsonServers": ["fetch"],
+  "permissions": {
+    "allow": ["mcp__fetch__fetch"]
+  }
+}
