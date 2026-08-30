@@ -4,12 +4,21 @@
 let users = [];
 let nextId = 1;
 
+let posts = [];
+let nextPostId = 1;
+
 function seed() {
   users = [
     { id: 1, name: 'Ada Lovelace', email: 'ada@example.com' },
     { id: 2, name: 'Alan Turing', email: 'alan@example.com' },
   ];
   nextId = 3;
+
+  posts = [
+    { id: 1, title: 'Hello World', body: 'My first post.' },
+    { id: 2, title: 'Second Post', body: 'Another one.' },
+  ];
+  nextPostId = 3;
 }
 seed();
 
@@ -36,9 +45,42 @@ function updateUser(id, fields) {
   return user;
 }
 
+function listPosts() {
+  return posts;
+}
+
+function getPost(id) {
+  return posts.find((post) => post.id === id);
+}
+
+function createPost({ title, body }) {
+  const post = { id: nextPostId, title, body };
+  nextPostId += 1;
+  posts.push(post);
+  return post;
+}
+
+function updatePost(id, fields) {
+  const post = getPost(id);
+  if (!post) return undefined;
+  if (fields.title !== undefined) post.title = fields.title;
+  if (fields.body !== undefined) post.body = fields.body;
+  return post;
+}
+
 // Reset to the seed data. Used by the tests so each one starts clean.
 function reset() {
   seed();
 }
 
-module.exports = { listUsers, getUser, createUser, updateUser, reset };
+module.exports = {
+  listUsers,
+  getUser,
+  createUser,
+  updateUser,
+  listPosts,
+  getPost,
+  createPost,
+  updatePost,
+  reset,
+};
