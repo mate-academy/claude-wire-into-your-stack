@@ -1,0 +1,21 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "mcp__mock-db-filesystem__.*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node scripts/hooks/check-mocks-setup.js"
+          }
+        ]
+      }
+    ]
+  },
+  "permissions": {
+    "allow": [
+      "mcp__mock-db-filesystem__read_file",
+      "mcp__mock-db-filesystem__list_directory"
+    ]
+  }
+}

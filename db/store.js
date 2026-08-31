@@ -1,15 +1,21 @@
 // In-memory data store. Every route reads and writes through these helpers,
 // so swapping in a real database later only touches this one file.
 
+const fs = require('fs');
+const path = require('path');
+
 let users = [];
 let nextId = 1;
 
 function seed() {
-  users = [
-    { id: 1, name: 'Ada Lovelace', email: 'ada@example.com' },
-    { id: 2, name: 'Alan Turing', email: 'alan@example.com' },
-  ];
-  nextId = 3;
+  const mockPath = path.join(__dirname, '..', 'mocks', 'users.mock.json');
+  try {
+    const data = JSON.parse(fs.readFileSync(mockPath, 'utf8'));
+    users = data.users;
+    nextId = data.nextId;
+  } catch (err) {
+    throw new Error(`Failed to load mocks/users.mock.json: ${err.message}. Please ensure mocks/users.mock.json is set up correctly (e.g., by running 'ROOT_PROJECT=$(pwd) node scripts/start-filesystem-mcp.js' first).`);
+  }
 }
 seed();
 
