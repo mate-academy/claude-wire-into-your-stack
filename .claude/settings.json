@@ -1,0 +1,22 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node scripts/hooks/check-mocks-setup.js"
+          }
+        ]
+      }
+    ]
+  },
+  "permissions": {
+    "deny": [
+      "mcp__mock-db-filesystem__write_file",
+      "mcp__mock-db-filesystem__edit_file",
+      "mcp__mock-db-filesystem__create_directory",
+      "mcp__mock-db-filesystem__move_file"
+    ]
+  }
+}

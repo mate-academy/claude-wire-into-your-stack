@@ -51,6 +51,11 @@ try {
   process.exit(1);
 }
 
+if (process.argv.includes('--setup-only')) {
+  console.log(`✓ Mocks setup complete. MCP server will be started separately.`);
+  process.exit(0);
+}
+
 console.log(`Starting filesystem MCP server on ${mockDbDir}...`);
 try {
   execSync(`npx -y @modelcontextprotocol/server-filesystem "${mockDbDir}"`, {
