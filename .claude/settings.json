@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__github__get_*",
+      "mcp__github__list_*",
+      "mcp__github__search_*"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node -e \"let d='';process.stdin.on('data',c=>d+=c);process.stdin.on('end',()=>{try{const j=JSON.parse(d);const f=(j.tool_input&&j.tool_input.file_path)||'';if(f.endsWith('.js')){require('child_process').spawnSync('npx',['eslint','--fix',f],{stdio:'inherit',shell:true});}}catch(e){}});\" 2>/dev/null || true",
+            "statusMessage": "Running eslint --fix..."
+          }
+        ]
+      }
+    ]
+  }
+}
