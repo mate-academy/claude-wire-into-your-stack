@@ -43,6 +43,7 @@ Scope is optional but recommended to clarify which part of the codebase is affec
 - **`tests`** — test files in `tests/`
 - **`docs`** — documentation files (README.md, CLAUDE.md, etc.)
 - **`ci`** — CI/CD configuration (.github/, etc.)
+- **`claude`** — Claude Code configuration and skills (.claude/, .mcp.json)
 
 ### Scope Examples
 
