@@ -1,7 +1,8 @@
 {
   "hooks": {
-    "SessionStart": [
+    "PreToolUse": [
       {
+        "matcher": "mcp__mock-db-filesystem__.*",
         "hooks": [
           {
             "type": "command",
@@ -12,11 +13,9 @@
     ]
   },
   "permissions": {
-    "deny": [
-      "mcp__mock-db-filesystem__write_file",
-      "mcp__mock-db-filesystem__edit_file",
-      "mcp__mock-db-filesystem__create_directory",
-      "mcp__mock-db-filesystem__move_file"
+    "allow": [
+      "mcp__mock-db-filesystem__read_file",
+      "mcp__mock-db-filesystem__list_directory"
     ]
   }
 }

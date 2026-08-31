@@ -1,6 +1,23 @@
 const test = require('node:test');
 const assert = require('node:assert');
+const fs = require('fs');
+const path = require('path');
 const request = require('supertest');
+
+// Ensure mock fixture exists for CI and machines without ROOT_PROJECT set
+const mocksDir = path.join(__dirname, '..', 'mocks');
+const mockFile = path.join(mocksDir, 'users.mock.json');
+if (!fs.existsSync(mockFile)) {
+  fs.mkdirSync(mocksDir, { recursive: true });
+  fs.writeFileSync(mockFile, JSON.stringify({
+    users: [
+      { id: 1, name: 'Ada Lovelace', email: 'ada@example.com' },
+      { id: 2, name: 'Alan Turing', email: 'alan@example.com' },
+    ],
+    nextId: 3,
+  }, null, 2));
+}
+
 const app = require('../server');
 const store = require('../db/store');
 

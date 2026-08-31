@@ -1,6 +1,6 @@
 ---
 name: conventional-commits
-description: Format commit messages following Conventional Commits v1.0.0-beta.4 specification
+description: Draft or review a commit message for this repository's changes, formatted to the project's Conventional Commits v1.0.0-beta.4 standard. Use when the user asks to write, check, or fix a commit message here — not for general discussion of commit conventions.
 ---
 
 # Conventional Commits Format

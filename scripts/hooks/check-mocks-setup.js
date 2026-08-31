@@ -36,13 +36,14 @@ if (isSymlinkValid()) {
 }
 
 if (!rootProject) {
-  console.error('⚠️  Mocks MCP is not set up.');
-  console.error('The mock-db-filesystem MCP server requires ROOT_PROJECT to be set.');
-  console.error('');
-  console.error('Set it to the path of your root project (where task---mock-db is/will be located):');
-  console.error('  export ROOT_PROJECT=/path/to/root-project');
-  console.error('');
-  console.error('Then reload/restart your Claude Code session.');
+  const output = {
+    hookSpecificOutput: {
+      hookEventName: 'PreToolUse',
+      permissionDecision: 'deny',
+      permissionDecisionReason: 'ROOT_PROJECT is not set. Set it to the path of your root project (where task---mock-db is/will be located): export ROOT_PROJECT=/path/to/root-project. Then retry.',
+    },
+  };
+  console.log(JSON.stringify(output));
   process.exit(0);
 }
 
