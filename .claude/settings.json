@@ -3,5 +3,20 @@
     "allow": [
       "mcp__bigThink__sequentialthinking"
     ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/lint-check.js",
+            "timeout": 60,
+            "statusMessage": "Running lint check..."
+          }
+        ]
+      }
+    ]
   }
 }
