@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "mock-db-filesystem": {
+      "command": "node",
+      "args": ["scripts/start-filesystem-mcp.js"]
+    }
+  }
+}
