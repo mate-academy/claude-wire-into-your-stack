@@ -1,6 +1,8 @@
 # Which server did you connect, why is it useful here, and what did your permission rule allow?
 
-I connected the sequential thinking MCP server. It is useful for approaching complex problems with sequential thoughts. Largely, I added it as an exercise rather than choosing it for its usefulness. It has one tool, sequentialThinking, that I allowed in the permission rules. 
+I connected the sequential thinking MCP server. It is useful for approaching complex problems with sequential thoughts. Largely, I added it as an exercise rather than choosing it for its usefulness. It has one tool, sequentialThinking, that I allowed in the permission rules
+
+Note: I looked into scoping the permission rule directly on the server entry in .mcp.json, but Claude Code doesn't support a permissions/allow field there — .mcp.json only holds connection details (command/args/url/type). Permission rules for MCP tools live in .claude/settings.json's permissions.allow, using `mcp__<server>` (whole server) or `mcp__<server>__<tool>` (one tool). Mine already uses the tool-scoped form, `mcp__bigThink__sequentialthinking`, which is the narrowest rule available.
 
 # What repeated way of working did your skill capture, and how did you word the description so it fires?
 I added a test-driven development skill. It builds failing tests first, before implementing any changes to the code.
