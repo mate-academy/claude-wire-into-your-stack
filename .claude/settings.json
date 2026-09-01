@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__docs-fs__read_file",
+      "mcp__docs-fs__list_directory"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node -e \"let d='';process.stdin.on('data',c=>d+=c);process.stdin.on('end',()=>{try{const j=JSON.parse(d);const f=(j.tool_input&&(j.tool_input.file_path||j.tool_input.filePath))||(j.tool_response&&j.tool_response.filePath);if(f&&f.endsWith('.js')){const path=require('path');const isWin=process.platform==='win32';const bin=path.join(process.cwd(),'node_modules','.bin',isWin?'eslint.cmd':'eslint');require('child_process').execFileSync(bin,['--fix',f],{stdio:'inherit',shell:isWin});}}catch(e){}});\" 2>/dev/null || true",
+            "statusMessage": "Running eslint --fix"
+          }
+        ]
+      }
+    ]
+  }
+}

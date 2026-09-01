@@ -16,6 +16,10 @@ module.exports = [
     },
     rules: {
       'no-unused-vars': ['warn', { argsIgnorePattern: '^(req|res|next)$' }],
+      'no-multi-spaces': 'error',
+      'space-before-blocks': 'error',
+      'keyword-spacing': 'error',
+      semi: 'error',
     },
   },
 ];

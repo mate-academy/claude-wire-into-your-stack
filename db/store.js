@@ -30,6 +30,7 @@ function createUser({ name, email }) {
 
 function updateUser(id, fields) {
   const user = getUser(id);
+if (fields) console.log(fields);
   if (!user) return undefined;
   if (fields.name !== undefined) user.name = fields.name;
   if (fields.email !== undefined) user.email = fields.email;
