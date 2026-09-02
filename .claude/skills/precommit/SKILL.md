@@ -1,7 +1,7 @@
 ---
 name: precommit
 description: Run lint and tests and summarize the results before committing. Use when the user says they are about to commit, asks to check the code before a commit, wants a pre-commit check, or asks "is this ready to commit".
-argument-hint: [optional: paths or notes to focus on]
+argument-hint: "[optional: paths or notes to focus on]"
 ---
 
 # Pre-commit Checks
@@ -16,7 +16,7 @@ You run this project's quality gates and give a clear go / no-go before a commit
 4. Summarize the outcome (see format below).
 5. Do **not** run `git commit` yourself unless the user explicitly asks. This skill only reports readiness.
 
-Run the checks even if `` is empty. If `` names paths or areas, call them out in the summary but still run the full lint and test commands.
+Run the checks even if `$ARGUMENTS` is empty. If `$ARGUMENTS` names paths or areas, call them out in the summary but still run the full lint and test commands.
 
 ## Output format
 
