@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "f=$(node -e 'let s=\"\";process.stdin.on(\"data\",d=>s+=d).on(\"end\",()=>{try{const j=JSON.parse(s)||{};const i=j.tool_input||{};const r=j.tool_response||{};process.stdout.write(String(i.path||i.file_path||r.filePath||\"\"))}catch(e){}})'); if [ -z \"$f\" ]; then echo '{\"systemMessage\":\"eslint hook: no file path in tool payload (checked tool_input.path, tool_input.file_path, tool_response.filePath); nothing to lint\"}'; exit 0; fi; case \"$f\" in *.js) if npx --no-install eslint --version >/dev/null 2>&1; then npx --no-install eslint --fix \"$f\"; else echo '{\"systemMessage\":\"eslint hook: eslint unavailable - run npm install; skipped this edit\"}'; exit 0; fi;; *) exit 0;; esac",
+            "statusMessage": "eslint --fix"
+          }
+        ]
+      }
+    ]
+  }
+}
