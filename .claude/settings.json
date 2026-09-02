@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "f=$(node -e 'let s=\"\";process.stdin.on(\"data\",d=>s+=d).on(\"end\",()=>{try{const j=JSON.parse(s);const p=(j.tool_input&&j.tool_input.file_path)||(j.tool_response&&j.tool_response.filePath)||\"\";process.stdout.write(p)}catch(e){}})'); case \"$f\" in *.js) npx --no-install eslint --fix \"$f\" 2>/dev/null || true;; esac",
+            "statusMessage": "eslint --fix"
+          }
+        ]
+      }
+    ]
+  }
+}
