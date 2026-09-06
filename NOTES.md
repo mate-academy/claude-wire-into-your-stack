@@ -64,6 +64,3 @@ password required). Use `schtasks /query /tn "ClaudeWireIntoYourStack-DailyScan"
 confirm it registered, and `schtasks /run /tn "ClaudeWireIntoYourStack-DailyScan"` to
 trigger a manual test run (note: a real run will commit and push to
 `feature/WireClaudeIntoYourStack` if it finds new commits to scan).
-
-This was intentionally left unregistered pending user confirmation before setting up a
-recurring unattended job that commits and pushes to GitHub on its own.
