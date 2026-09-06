@@ -28,12 +28,10 @@ Summary of the Claude Code customizations added to this repo.
   `Write`, `Edit`, and `NotebookEdit` tool calls whenever the current git branch is `main`,
   denying the call with an explanatory message. Has no effect on any other branch.
 
-## Daily Commit-Scan Task (not yet finished)
+## Daily Commit-Scan Task
 
 A local, unattended `claude -p` job that scans commits on `feature/WireClaudeIntoYourStack`
-since its last run, inserts `TODO:` comments on issues it finds, and appends a report. The
-pieces are built and committed, but **the Windows scheduled task itself has not been
-registered yet** — it currently does not run on any schedule.
+since its last run, inserts `TODO:` comments on issues it finds, and appends a report. 
 
 Files already in place:
 
