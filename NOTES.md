@@ -8,6 +8,58 @@ Summary of the Claude Code customizations added to this repo.
   - Create a new branch
   - Push Commits to GitHub
   - Create a pull request.
+### Permisions
+- The Allow permission are specified in the repo/project settings.json
+-- "allow": [
+      "mcp__github__create_branch",            - Create branches for code, never allow changes to main
+      "mcp__github__create_or_update_file",    - Ability to manage codebase
+      "mcp__github__get_commit",               - Ability to commit changes
+      "mcp__github__get_file_contents",        - Ability to retrieve / read files in repo
+      "mcp__github__list_branches",            - Ability to retreve branch list
+      "mcp__github__list_commits",             - Ability to list/read commits
+      "mcp__github__list_pull_requests",       - Ability to list current pull requests
+      "mcp__github__pull_request_read",        - Read pull request
+      "mcp__github__push_files"                - Puah files to GITHUB
+    ],
+    "deny": [
+      "mcp__github__add_comment_to_pending_review",
+      "mcp__github__add_issue_comment",
+      "mcp__github__add_reply_to_pull_request_comment",
+      "mcp__github__create_pull_request",
+      "mcp__github__create_repository",
+      "mcp__github__delete_file",
+      "mcp__github__delete_repository",
+      "mcp__github__fork_repository",
+      "mcp__github__get_label",
+      "mcp__github__get_latest_release",
+      "mcp__github__get_me",
+      "mcp__github__get_release_by_tag",
+      "mcp__github__get_tag",
+      "mcp__github__get_team_members",
+      "mcp__github__get_teams",
+      "mcp__github__issue_read",
+      "mcp__github__issue_write",
+      "mcp__github__list_issue_fields",
+      "mcp__github__list_issue_types",
+      "mcp__github__list_issues",
+      "mcp__github__list_releases",
+      "mcp__github__list_repository_collaborators",
+      "mcp__github__list_tags",
+      "mcp__github__merge_pull_request",
+      "mcp__github__pull_request_review_write",
+      "mcp__github__request_copilot_review",
+      "mcp__github__run_secret_scanning",
+      "mcp__github__search_code",
+      "mcp__github__search_commits",
+      "mcp__github__search_issues",
+      "mcp__github__search_pull_requests",
+      "mcp__github__search_repositories",
+      "mcp__github__search_users",
+      "mcp__github__sub_issue_write",
+      "mcp__github__update_pull_request",
+      "mcp__github__update_pull_request_branch"
+    ]
+
 
 ## Commands
 
