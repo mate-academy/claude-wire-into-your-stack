@@ -59,8 +59,9 @@ Arguments:
 - `/tr "..."` — runs `daily-scan.ps1` via PowerShell with script signing/profile
   restrictions bypassed just for this invocation.
 
-By default this creates a task that only runs while the user is logged on (no stored
-password required). Use `schtasks /query /tn "ClaudeWireIntoYourStack-DailyScan"` to
-confirm it registered, and `schtasks /run /tn "ClaudeWireIntoYourStack-DailyScan"` to
-trigger a manual test run (note: a real run will commit and push to
-`feature/WireClaudeIntoYourStack` if it finds new commits to scan).
+Allowed tools:
+- Bash - Need to execute basch commands
+- Read,Write,Edit - Need to review and provide feedback and create report
+- Glob - Need to evaluation
+- Grep - Need to search code block
+
