@@ -1,9 +1,14 @@
 # Claude Code Setup Notes
 
 Summary of the Claude Code customizations added to this repo.
-## MPC Server
-- Added GITHUB MPC server to .mpc.json allowing GITHUB access to the forked repo. This does require an access token for security purposes.
-- 
+## MCP Server
+- Added GITHUB MCP server to .mpc.json allowing GITHUB access to the forked repo. This does require an access token for security purposes.
+### Execution
+- Claude used the server to access GitHub to manage this repo
+  - Create a new branch
+  - Push Commits to GitHub
+  - Create a pull request.
+
 ## Commands
 
 - **`/format`** (`.claude/commands/format.md`) — Reformats all project files with Prettier
