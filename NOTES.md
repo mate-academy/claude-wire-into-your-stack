@@ -101,7 +101,7 @@ Files already in place:
   (`Bash(git *)`, `Read`, `Glob`, `Grep`, `Edit`, `Write`) so the unattended run doesn't
   hit permission prompts, without a blanket `--dangerously-skip-permissions`.
 
-### To finish: register the Windows scheduled task
+### The Windows scheduled task
 
 Run (from an elevated or normal PowerShell prompt — no admin rights needed for a
 per-user task):
