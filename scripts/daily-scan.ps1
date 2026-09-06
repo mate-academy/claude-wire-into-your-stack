@@ -2,8 +2,8 @@
 # safe to run manually too.
 
 $ErrorActionPreference = "Stop"
-
-$repoRoot = "c:\Jobs\Training\rphoffman\claude-wire-into-your-stack"
+$PSScriptRoot = "."
+$repoRoot = "$PSScriptRoot\claude-wire-into-your-stack"
 Set-Location $repoRoot
 
 $promptPath = Join-Path $repoRoot ".claude\scan-prompt.txt"
