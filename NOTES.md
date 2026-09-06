@@ -1,7 +1,9 @@
 # Claude Code Setup Notes
 
 Summary of the Claude Code customizations added to this repo.
-
+## MPC Server
+- Added GITHUB MPC server to .mpc.json allowing GITHUB access to the forked repo. This does require an access token for security purposes.
+- 
 ## Commands
 
 - **`/format`** (`.claude/commands/format.md`) — Reformats all project files with Prettier
@@ -21,7 +23,7 @@ Summary of the Claude Code customizations added to this repo.
   `Write`, `Edit`, and `NotebookEdit` tool calls whenever the current git branch is `main`,
   denying the call with an explanatory message. Has no effect on any other branch.
 
-## Pending: Daily Commit-Scan Task (not yet finished)
+## Daily Commit-Scan Task (not yet finished)
 
 A local, unattended `claude -p` job that scans commits on `feature/WireClaudeIntoYourStack`
 since its last run, inserts `TODO:` comments on issues it finds, and appends a report. The
@@ -64,3 +66,11 @@ password required). Use `schtasks /query /tn "ClaudeWireIntoYourStack-DailyScan"
 confirm it registered, and `schtasks /run /tn "ClaudeWireIntoYourStack-DailyScan"` to
 trigger a manual test run (note: a real run will commit and push to
 `feature/WireClaudeIntoYourStack` if it finds new commits to scan).
+
+
+Allowed tools:
+- Bash - Need to execute basch commands
+- Read,Write,Edit - Need to review and provide feedback and create report
+- Glob - Need to evaluation
+- Grep - Need to search code block
+
