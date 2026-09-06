@@ -128,4 +128,7 @@ Allowed tools:
 - Read,Write,Edit - Need to review and provide feedback and create report
 - Glob - Need to evaluation
 - Grep - Need to search code block
+### I ran the following for this assignment
+claude -p "List all TODO comments in this project" --allowedTools "Bash,Grep,Read"
+This ran and did not find any TODO comments in the project. I also added a TODO comment in a file and ran the same commend and it found the TODO comment and reported it to me.
 
