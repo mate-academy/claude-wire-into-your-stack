@@ -131,4 +131,6 @@ Allowed tools:
 ### I ran the following for this assignment
 claude -p "List all TODO comments in this project" --allowedTools "Bash,Grep,Read"
 This ran and did not find any TODO comments in the project. I also added a TODO comment in a file and ran the same commend and it found the TODO comment and reported it to me.
+claude -p ".claude/scan-prompt.txt" --settings ".claude/scan-task.settings.json" --allowedTools "Bash,Read,Write,Edit,Glob,Grep"
+This ran with leveraging the allowed permissions in settings.json. It did not need to find any issues to report.
 
