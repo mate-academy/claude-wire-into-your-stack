@@ -133,5 +133,5 @@ claude -p "List all TODO comments in this project" --allowedTools "Bash,Grep,Rea
 This ran and did not find any TODO comments in the project. I also added a TODO comment in a file and ran the same commend and it found the TODO comment and reported it to me.
 #### Headless Execution Results
 claude -p ".claude/scan-prompt.txt" --settings ".claude/scan-task.settings.json" --allowedTools "Bash,Read,Write,Edit,Glob,Grep"
-This ran with leveraging the allowed permissions in settings.json. It did not need to find any issues so it did not generate the report.
+This ran with leveraging the allowed permissions in settings.json. The results of the execution can be found in SCAN_REPORT.md
 
