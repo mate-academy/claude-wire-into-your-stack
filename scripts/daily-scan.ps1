@@ -3,7 +3,7 @@
 
 $ErrorActionPreference = "Stop"
 $PSScriptRoot = $repoRoot = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)
-$repoRoot = "$PSScriptRoot\claude-wire-into-your-stack"
+$repoRoot = $PSScriptRoot
 Set-Location $repoRoot
 
 $promptPath = Join-Path $repoRoot ".claude\scan-prompt.txt"
