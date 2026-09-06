@@ -2,7 +2,7 @@
 # safe to run manually too.
 
 $ErrorActionPreference = "Stop"
-$PSScriptRoot = "."
+$PSScriptRoot = $repoRoot = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)
 $repoRoot = "$PSScriptRoot\claude-wire-into-your-stack"
 Set-Location $repoRoot
 
