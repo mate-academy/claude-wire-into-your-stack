@@ -6,7 +6,19 @@
       "headers": {
         "Authorization": "Bearer ${GITHUB_MCP_TOKEN}",
         "X-MCP-Toolsets": "repos,pull_requests"
-      }
+      },
+      "_permissions_note": "Not read by Claude Code — documentation only. Actual enforcement is the allow/deny list in .claude/settings.json (mcp__github__* entries).",
+      "allowedTools": [
+        "mcp__github__create_branch",
+        "mcp__github__create_or_update_file",
+        "mcp__github__get_commit",
+        "mcp__github__get_file_contents",
+        "mcp__github__list_branches",
+        "mcp__github__list_commits",
+        "mcp__github__list_pull_requests",
+        "mcp__github__pull_request_read",
+        "mcp__github__push_files"
+      ]
     }
   }
 }
