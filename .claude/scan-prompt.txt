@@ -1,0 +1,21 @@
+You are running as a scheduled daily code-scan agent for this repository, on branch `feature/WireClaudeIntoYourStack`.
+
+Steps:
+
+1. `git checkout feature/WireClaudeIntoYourStack` (in case another branch is checked out), then `git pull origin feature/WireClaudeIntoYourStack`.
+
+2. Determine the last-scanned commit: read `.claude/last-scan-commit.txt` at the repo root. If it exists, its content (trimmed) is the last-scanned commit SHA. If it does not exist, treat this as the first run and use the repository's root commit as the baseline: `git rev-list --max-parents=0 HEAD` (use the first line if there are multiple roots).
+
+3. Compute what changed since that baseline: `git log <baseline>..HEAD --oneline` and `git diff <baseline>..HEAD --stat`. If HEAD is the same as the baseline (no new commits), do nothing further — do not modify any files, do not commit, just stop here.
+
+4. If there are new commits, review the changed files (`git diff <baseline>..HEAD`) for real code issues: bugs, correctness problems, obvious anti-patterns, error-handling gaps, security issues. Keep this lightweight and pragmatic — a quick, useful review, not an exhaustive audit. Skip files that are pure documentation, config data, or lockfiles unless something is clearly wrong in them.
+
+5. For every issue you find, insert a comment at the exact location of the issue in the source file, in that language's comment syntax, in the form: `TODO: <short description of the issue>` (e.g. `// TODO: ...` in JS, `# TODO: ...` in Python, etc.). Do not otherwise modify the surrounding code.
+
+6. Update (or create) `SCAN_REPORT.md` at the repo root. Append a new dated section (use today's date, e.g. `## 2026-09-07 scan`) containing: the commit range scanned (`<baseline>..<new HEAD>`), the list of files changed, and for each issue found: file path, line number, and a one-line description. If no issues were found but there were new commits, still append a section noting the commit range scanned and that no issues were found. Do not remove or rewrite prior sections of this file — always append.
+
+7. Write the new HEAD commit SHA (`git rev-parse HEAD`, the commit before your own changes) into `.claude/last-scan-commit.txt`, replacing its previous contents (create the file if it doesn't exist).
+
+8. Stage and commit everything you changed (the TODO comments, `SCAN_REPORT.md`, and `.claude/last-scan-commit.txt`) in a single commit on `feature/WireClaudeIntoYourStack` with a concise message summarizing what was scanned and how many issues were found, e.g. `Scan: reviewed commits <short-baseline>..<short-head>, found N issue(s)`. Then push: `git push origin feature/WireClaudeIntoYourStack`.
+
+Do not open a pull request. Do not touch any branch other than `feature/WireClaudeIntoYourStack`. If pushing fails because the remote branch moved, pull/rebase once and retry; if it still fails, stop and report the failure instead of forcing.
