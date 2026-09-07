@@ -1,7 +1,5 @@
----
 name: list-todos
 description: Scan the project source for TODO/FIXME/HACK/XXX comments and report them grouped by file with line numbers. Use when the user asks to list, find, or summarize outstanding TODOs or unfinished work in this repo.
----
 
 # List TODOs
 
