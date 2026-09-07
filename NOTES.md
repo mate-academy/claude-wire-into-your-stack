@@ -129,6 +129,7 @@ The feedback from Claude Code is 'Pushed successfully — main is now up to date
 - **format on edit** (`.claude/settings.json`, `PostToolUse` hook) — ensures that all
   files are formated correctly before commits to repo. This is executed on a PostToolUse
   with permissions "Write/Edit"
+  Note: that CI or developer machines need npx installed
   Modified eslintconfig.js and removed all tabs for the module export arrar:
   '''
   module.exports = [
