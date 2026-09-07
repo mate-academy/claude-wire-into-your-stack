@@ -17,3 +17,4 @@ if (-not (Test-Path $logDir)) {
 $logFile = Join-Path $logDir ("scan-{0}.log" -f (Get-Date -Format "yyyy-MM-dd_HHmmss"))
 
 & claude -p $prompt --settings $settingsPath --allowedTools "Bash,Read,Write,Edit,Glob,Grep" *> $logFile
+
