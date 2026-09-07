@@ -174,6 +174,12 @@ The feedback from Claude Code is 'Pushed successfully — main is now up to date
     },
   ];
   '''
+- Block file deletiong
+  Ran the follow code: claude -p "list the files here, then delete the testme" --allowedTools "Read"
+  Results from running code is as follows:
+  "I'm unable to delete `testme.md` — the sandbox is blocking file deletion even though it's within the working directory (likely a permission
+   restriction on delete operations specifically). Could you delete it manually,
+   or let me know if there's a different way you'd like me to try?"
 ## Daily Commit-Scan Task
 
 A local, unattended `claude -p` job that scans commits on `feature/WireClaudeIntoYourStack`
