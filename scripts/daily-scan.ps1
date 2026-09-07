@@ -18,3 +18,20 @@ $logFile = Join-Path $logDir ("scan-{0}.log" -f (Get-Date -Format "yyyy-MM-dd_HH
 
 & claude -p $prompt --settings $settingsPath --allowedTools "Bash,Read,Write,Edit,Glob,Grep" *> $logFile
 
+if ($LASTEXITCODE -ne 0) {
+    $errorMessage = "Claude daily scan failed (exit code $LASTEXITCODE); see $logFile"
+    Write-Error $errorMessage
+
+    try {
+        $eventSource = "Claude Daily Scan"
+        if (-not [System.Diagnostics.EventLog]::SourceExists($eventSource)) {
+            New-EventLog -LogName Application -Source $eventSource
+        }
+        Write-EventLog -LogName Application -Source $eventSource -EntryType Error -EventId 1 -Message $errorMessage
+    } catch {
+        Write-Warning "Could not write to Windows Event Log: $_"
+    }
+
+    exit $LASTEXITCODE
+}
+
