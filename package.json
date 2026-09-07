@@ -8,7 +8,8 @@
     "dev": "node server.js",
     "start": "node server.js",
     "test": "node --test",
-    "lint": "eslint server.js routes db tests"
+    "lint": "eslint server.js routes db tests",
+    "review": "claude -p \"/review-changes\" --allowedTools \"Read,Grep,Glob,Bash(git diff:*),Bash(git log:*),Bash(git status:*)\""
   },
   "dependencies": {
     "express": "^4.19.2"
