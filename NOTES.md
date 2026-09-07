@@ -1,0 +1,5 @@
+- Which server did you connect, why is it useful here, and what did your permission rule allow?
+- What repeated way of working did your skill capture, and how did you word the description so it fires?
+- What command did you add, and what makes it worth a shortcut?
+- What hook did you set — does it react or prevent, and on which event?
+- What did you run headless, and what did you lock down?
