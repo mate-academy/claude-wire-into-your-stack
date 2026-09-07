@@ -1,6 +1,4 @@
----
 description: Reformat all code files in the project with Prettier
----
 
 Run Prettier across the project to make sure every file is formatted consistently.
 
