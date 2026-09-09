@@ -2,6 +2,11 @@
 
 A small Express API used as the working project throughout the Claude Code course.
 
+## Tech Stack
+- Frontend: [e.g., Next.js, React]
+- Backend: [e.g., Node.js, FastAPI]
+- Database: [e.g., PostgreSQL, Supabase]
+  
 ## Commands
 - `npm run dev` — start the API locally on port 3000
 - `npm test` — run the test suite (Node's built-in test runner)
