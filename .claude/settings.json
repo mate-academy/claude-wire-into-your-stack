@@ -1,0 +1,32 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__course-docs__read_text_file",
+      "mcp__course-docs__read_file",
+      "mcp__course-docs__read_multiple_files",
+      "mcp__course-docs__list_directory",
+      "mcp__course-docs__directory_tree",
+      "mcp__course-docs__search_files",
+      "mcp__course-docs__get_file_info"
+    ],
+    "deny": [
+      "mcp__course-docs__write_file",
+      "mcp__course-docs__edit_file",
+      "mcp__course-docs__create_directory",
+      "mcp__course-docs__move_file"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/guard-bash.js"
+          }
+        ]
+      }
+    ]
+  }
+}
