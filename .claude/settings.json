@@ -1,10 +1,13 @@
 {
-  "hooks": [
+  "PostToolUse": [
     {
-      "event": "PostToolUse",
       "matcher": "str_replace",
-      "command": "/check",
-      "description": "Auto-run tests and linting after every file edit to catch regressions"
+      "hooks": [
+        {
+          "type": "command",
+          "command": "/check"
+        }
+      ]
     }
   ]
 }
