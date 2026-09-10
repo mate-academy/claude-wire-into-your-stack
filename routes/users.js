@@ -1,3 +1,8 @@
+// Express router for the /users resource. Exposes CRUD endpoints (list, fetch,
+// create, update, delete) mounted under /users in server.js. All state lives in
+// db/store.js; each handler validates its input and returns 400 on bad input,
+// 404 when the record is missing, with errors shaped as { error: message }.
+
 const express = require('express');
 const store = require('../db/store');
 
