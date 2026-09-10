@@ -1,3 +1,8 @@
+// Express router for the /users resource. Exposes CRUD endpoints (list, fetch,
+// create, update, delete) mounted under /users in server.js. All state lives in
+// db/store.js; each handler validates its input and returns 400 on bad input,
+// 404 when the record is missing, with errors shaped as { error: message }.
+
 const express = require('express');
 const store = require('../db/store');
 
@@ -15,6 +20,19 @@ router.get('/:id', (req, res) => {
     return res.status(404).json({ error: 'User not found' });
   }
   return res.json(user);
+});
+
+// GET /users/:id/stats — name and email lengths for one user, or 404 if missing.
+router.get('/:id/stats', (req, res) => {
+  const user = store.getUser(Number(req.params.id));
+  if (!user) {
+    return res.status(404).json({ error: 'User not found' });
+  }
+  return res.json({
+    id: user.id,
+    nameLength: user.name.length,
+    emailLength: user.email.length,
+  });
 });
 
 // POST /users — create a user. Requires name and email.
@@ -38,6 +56,15 @@ router.put('/:id', (req, res) => {
     return res.status(404).json({ error: 'User not found' });
   }
   return res.json(user);
+});
+
+// DELETE /users/:id — remove a user, or 404 if it doesn't exist.
+router.delete('/:id', (req, res) => {
+  const deleted = store.deleteUser(Number(req.params.id));
+  if (!deleted) {
+    return res.status(404).json({ error: 'User not found' });
+  }
+  return res.status(204).end();
 });
 
 module.exports = router;

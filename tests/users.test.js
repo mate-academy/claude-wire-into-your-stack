@@ -18,6 +18,21 @@ test('GET /users/:id returns 404 for a missing user', async () => {
   assert.equal(res.status, 404);
 });
 
+test('GET /users/:id/stats returns name and email lengths', async () => {
+  const res = await request(app).get('/users/1/stats');
+  assert.equal(res.status, 200);
+  assert.deepEqual(res.body, {
+    id: 1,
+    nameLength: 'Ada Lovelace'.length,
+    emailLength: 'ada@example.com'.length,
+  });
+});
+
+test('GET /users/:id/stats returns 404 for a missing user', async () => {
+  const res = await request(app).get('/users/999/stats');
+  assert.equal(res.status, 404);
+});
+
 test('POST /users creates a user', async () => {
   const res = await request(app)
     .post('/users')
@@ -35,5 +50,17 @@ test('PUT /users/:id updates an existing user', async () => {
 
 test('PUT /users/:id returns 404 for a missing user', async () => {
   const res = await request(app).put('/users/999').send({ name: 'Nobody' });
+  assert.equal(res.status, 404);
+});
+
+test('DELETE /users/:id removes an existing user', async () => {
+  const res = await request(app).delete('/users/1');
+  assert.equal(res.status, 204);
+  const after = await request(app).get('/users/1');
+  assert.equal(after.status, 404);
+});
+
+test('DELETE /users/:id returns 404 for a missing user', async () => {
+  const res = await request(app).delete('/users/999');
   assert.equal(res.status, 404);
 });

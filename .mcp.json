@@ -1,0 +1,19 @@
+{
+  "mcpServers": {
+    "fetch": {
+      "command": "fetch",
+      "args": [],
+      "env": {}
+    }
+  },
+  "permissions": {
+    "fetch": {
+      "allowedTools": ["fetch"],
+      "allowedPatterns": [
+        "http://localhost:3000/health",
+        "http://localhost:3000/users",
+        "http://localhost:3000/users/*"
+      ]
+    }
+  }
+}
