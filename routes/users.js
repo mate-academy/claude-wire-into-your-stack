@@ -22,6 +22,19 @@ router.get('/:id', (req, res) => {
   return res.json(user);
 });
 
+// GET /users/:id/stats — name and email lengths for one user, or 404 if missing.
+router.get('/:id/stats', (req, res) => {
+  const user = store.getUser(Number(req.params.id));
+  if (!user) {
+    return res.status(404).json({ error: 'User not found' });
+  }
+  return res.json({
+    id: user.id,
+    nameLength: user.name.length,
+    emailLength: user.email.length,
+  });
+});
+
 // POST /users — create a user. Requires name and email.
 router.post('/', (req, res) => {
   const { name, email } = req.body;

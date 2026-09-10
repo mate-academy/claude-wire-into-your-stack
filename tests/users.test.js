@@ -18,6 +18,21 @@ test('GET /users/:id returns 404 for a missing user', async () => {
   assert.equal(res.status, 404);
 });
 
+test('GET /users/:id/stats returns name and email lengths', async () => {
+  const res = await request(app).get('/users/1/stats');
+  assert.equal(res.status, 200);
+  assert.deepEqual(res.body, {
+    id: 1,
+    nameLength: 'Ada Lovelace'.length,
+    emailLength: 'ada@example.com'.length,
+  });
+});
+
+test('GET /users/:id/stats returns 404 for a missing user', async () => {
+  const res = await request(app).get('/users/999/stats');
+  assert.equal(res.status, 404);
+});
+
 test('POST /users creates a user', async () => {
   const res = await request(app)
     .post('/users')
