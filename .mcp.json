@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "fetch-docs": {
+      "command": "npx",
+      "args": ["-y", "@tokenizin/mcp-npx-fetch@1.0.0"],
+      "env": {}
+    }
+  }
+}
