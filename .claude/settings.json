@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "mcp__fetch-docs__fetch_markdown",
+      "mcp__fetch-docs__fetch_txt",
+      "mcp__fetch-docs__fetch_json"
+    ],
+    "ask": [
+      "mcp__fetch-docs__fetch_html",
+      "NotebookEdit",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(git reset:*)",
+      "Bash(git checkout:*)",
+      "Bash(npm install:*)",
+      "Bash(npm uninstall:*)",
+      "Bash(rm:*)",
+      "Bash(mv:*)"
+    ],
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PROJECT_DIR:-.}/.claude/hooks/block-risky-bash.js\"",
+            "timeout": 10,
+            "statusMessage": "Checking command against the project guard"
+          }
+        ]
+      }
+    ]
+  }
+}
