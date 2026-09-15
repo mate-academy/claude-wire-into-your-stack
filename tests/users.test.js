@@ -37,3 +37,9 @@ test('PUT /users/:id returns 404 for a missing user', async () => {
   const res = await request(app).put('/users/999').send({ name: 'Nobody' });
   assert.equal(res.status, 404);
 });
+
+test('POST /users returns 400 when name or email is missing', async () => {
+  const res = await request(app).post('/users').send({ name: 'No Email' });
+  assert.equal(res.status, 400);
+  assert.equal(res.body.error, 'name and email are required');
+});
