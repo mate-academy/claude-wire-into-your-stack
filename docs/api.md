@@ -14,6 +14,22 @@ Response `200`:
 { "status": "ok", "uptime": 12.34 }
 ```
 
+### GET /api/ping
+Liveness check.
+
+Response `200`:
+```json
+{ "status": "ok" }
+```
+
+### GET /api/version
+Returns the API's package version.
+
+Response `200`:
+```json
+{ "version": "1.0.0" }
+```
+
 ## Users
 
 A user looks like:
