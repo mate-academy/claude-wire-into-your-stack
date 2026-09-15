@@ -6,7 +6,9 @@
         "-y",
         "@modelcontextprotocol/server-filesystem",
         "${CLAUDE_PROJECT_DIR}/docs"
-      ]
+      ],
+      "_comment": "allowedTools is not read by Claude Code (permission scoping for this server is enforced via permissions.deny in .claude/settings.json). Listed here only for external audit tooling that expects an MCP-scoped rule in this file.",
+      "allowedTools": ["read_file", "list_directory", "search_files"]
     }
   }
 }
