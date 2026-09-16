@@ -6,6 +6,9 @@ const store = require('../db/store');
 
 test.beforeEach(() => store.reset());
 
+/**
+ * Verifies that GET /users returns the full seeded list of users.
+ */
 test('GET /users returns the seeded list', async () => {
   const res = await request(app).get('/users');
   assert.equal(res.status, 200);
@@ -13,11 +16,17 @@ test('GET /users returns the seeded list', async () => {
   assert.equal(res.body.length, 2);
 });
 
+/**
+ * Verifies that GET /users/:id returns a 404 when the user does not exist.
+ */
 test('GET /users/:id returns 404 for a missing user', async () => {
   const res = await request(app).get('/users/999');
   assert.equal(res.status, 404);
 });
 
+/**
+ * Verifies that POST /users creates a new user and returns it with an id.
+ */
 test('POST /users creates a user', async () => {
   const res = await request(app)
     .post('/users')
@@ -27,12 +36,18 @@ test('POST /users creates a user', async () => {
   assert.ok(res.body.id);
 });
 
+/**
+ * Verifies that PUT /users/:id updates an existing user's fields.
+ */
 test('PUT /users/:id updates an existing user', async () => {
   const res = await request(app).put('/users/1').send({ name: 'Ada L.' });
   assert.equal(res.status, 200);
   assert.equal(res.body.name, 'Ada L.');
 });
 
+/**
+ * Verifies that PUT /users/:id returns a 404 when the user does not exist.
+ */
 test('PUT /users/:id returns 404 for a missing user', async () => {
   const res = await request(app).put('/users/999').send({ name: 'Nobody' });
   assert.equal(res.status, 404);
