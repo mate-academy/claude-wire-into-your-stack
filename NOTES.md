@@ -2,4 +2,4 @@ I added an `.mcp.json` file to wire up the GitHub MCP server, running it via Doc
 I then created a `summarize-commits` skill that summarizes the last 5 already-pushed commits, giving it a "Hashes" menu that lists commit hashes with no explanation and a "Summary" menu that gives one plain-text sentence per commit, no bullet points. It fires as expected.
 Next I added a `find-todos` command that finds every TODO and FIXME comment in the codebase and lists them grouped by file. It found none in current project as expected.
 I wired up a `PostToolUse` hook in `.claude/settings.json` that runs `npm run format` automatically after every `Edit` or `Write` tool use. It fires when called. 
-I ran `claude -p 'add a docstring to every tests in /tests folder' --allowedTools "Edit"` to keep test documentation consistent.
+I ran `claude -p 'add a docstring to every test in /tests folder' --allowedTools "Read,Edit"` to keep test documentation consistent.
