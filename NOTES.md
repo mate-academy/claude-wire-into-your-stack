@@ -3,6 +3,7 @@
 ## MCP server
 
 Connected the `filesystem` server (`@modelcontextprotocol/server-filesystem`) at project scope in `.mcp.json`, scoped to this repo's directory. It is credential-free and lets Claude browse and read project files directly through MCP rather than shelling out.
+The filesystem server uses a relative `.` path in `.mcp.json`, so the configuration remains portable when teammates clone the repository to different local directories; no path update is required after cloning.
 
 The permission rule in `.claude/settings.json` allows only the read-only tools `list_directory`, `read_file`, and `get_file_info`. It explicitly denies `write_file`, `edit_file`, `create_directory`, and `move_file`, so the server cannot be used to modify the filesystem even though it is capable of it.
 
