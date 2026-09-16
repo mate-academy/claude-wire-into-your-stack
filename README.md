@@ -70,12 +70,12 @@ In a short `NOTES.md`, answer in a few sentences each:
 
 ### Definition of done
  
-- [ ] a server is connected at project scope (committed `.mcp.json`), with a permission rule scoping what it may do, and you've used it at least once
-- [ ] a project skill exists in `.claude/skills/`, with a description that triggers on the right request, and you confirmed it fires
-- [ ] a custom command exists in `.claude/commands/` and runs the way you intended
-- [ ] a hook is set at project scope (committed `.claude/settings.json`) and fires on its event
-- [ ] one task run headless with a scoped `--allowedTools`
-- [ ] `NOTES.md` committed, explaining each choice
+- [x] a server is connected at project scope (committed `.mcp.json`), with a permission rule scoping what it may do, and you've used it at least once
+- [x] a project skill exists in `.claude/skills/`, with a description that triggers on the right request, and you confirmed it fires
+- [x] a custom command exists in `.claude/commands/` and runs the way you intended
+- [x] a hook is set at project scope (committed `.claude/settings.json`) and fires on its event
+- [x] one task run headless with a scoped `--allowedTools`
+- [x] `NOTES.md` committed, explaining each choice
 
 ### Submit
  

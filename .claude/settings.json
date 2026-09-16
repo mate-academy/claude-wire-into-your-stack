@@ -1,0 +1,55 @@
+{
+  "enabledMcpjsonServers": ["filesystem"],
+  "permissions": {
+    "allow": [
+      "Read",
+      "mcp__filesystem__read_text_file",
+      "mcp__filesystem__read_file",
+      "mcp__filesystem__read_multiple_files",
+      "mcp__filesystem__list_directory",
+      "mcp__filesystem__list_directory_with_sizes",
+      "mcp__filesystem__directory_tree",
+      "mcp__filesystem__search_files",
+      "mcp__filesystem__get_file_info",
+      "mcp__filesystem__list_allowed_directories"
+    ],
+    "deny": [
+      "Glob",
+      "Edit(.)",
+      "Write(.)",
+      "mcp__filesystem__write_file",
+      "mcp__filesystem__edit_file",
+      "mcp__filesystem__create_directory",
+      "mcp__filesystem__move_file"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/pretest-git-add.js",
+            "if": "Bash(git add *)",
+            "timeout": 60,
+            "statusMessage": "Running tests related to staged files..."
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|MultiEdit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "OUTPUT=$(npm run lint 2>&1); CODE=$?; if [ $CODE -ne 0 ]; then printf '%s' \"$OUTPUT\" | node -e 'let d=\"\";process.stdin.on(\"data\",c=>d+=c);process.stdin.on(\"end\",()=>{console.log(JSON.stringify({hookSpecificOutput:{hookEventName:\"PostToolUse\",additionalContext:\"Lint failed:\\n\"+d,systemMessage:\"Linting checks failed\"}}))});'; fi",
+            "timeout": 30,
+            "statusMessage": "Running npm run lint..."
+          }
+        ]
+      }
+    ]
+  }
+}

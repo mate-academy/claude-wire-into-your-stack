@@ -37,3 +37,27 @@ test('PUT /users/:id returns 404 for a missing user', async () => {
   const res = await request(app).put('/users/999').send({ name: 'Nobody' });
   assert.equal(res.status, 404);
 });
+
+test('POST /users returns 400 when name and email are missing', async () => {
+  const res = await request(app).post('/users').send({});
+  assert.equal(res.status, 400);
+  assert.deepEqual(res.body, { error: 'name and email are required' });
+});
+
+test('POST /users returns 400 when only name is provided', async () => {
+  const res = await request(app).post('/users').send({ name: 'Grace Hopper' });
+  assert.equal(res.status, 400);
+  assert.deepEqual(res.body, { error: 'name and email are required' });
+});
+
+test('POST /users returns 400 when only email is provided', async () => {
+  const res = await request(app).post('/users').send({ email: 'grace@example.com' });
+  assert.equal(res.status, 400);
+  assert.deepEqual(res.body, { error: 'name and email are required' });
+});
+
+test('PUT /users/:id returns 400 when neither name nor email is provided', async () => {
+  const res = await request(app).put('/users/1').send({});
+  assert.equal(res.status, 400);
+  assert.deepEqual(res.body, { error: 'name or email is required' });
+});
