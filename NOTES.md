@@ -2,9 +2,9 @@
 
 Which server did you connect, why is it useful here, and what did your permission rule allow?
 - The MCP server filesystem was used in order to create or edit documentation in project. Permissions allowed:
-    - "mcp__filesystem__read_text_file",
-    - "mcp__filesystem__write_file",
-    - "mcp__filesystem__edit_file"
+    - "read_text_file",
+    - "write_file",
+    - "edit_file"
 
 What repeated way of working did your skill capture, and how did you word the description so it fires?
 - a skill related to how a route is written was created
