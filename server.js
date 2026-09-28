@@ -1,12 +1,14 @@
 const express = require('express');
 const usersRouter = require('./routes/users');
 const healthRouter = require('./routes/health');
+const todosRouter = require('./routes/todos');
 
 const app = express();
 app.use(express.json());
 
 app.use('/health', healthRouter);
 app.use('/users', usersRouter);
+app.use('/todos', todosRouter);
 
 const PORT = process.env.PORT || 3000;
 
