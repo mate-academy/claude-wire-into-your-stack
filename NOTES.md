@@ -21,7 +21,7 @@ What hook did you set — does it react or prevent, and on which event?
 What did you run headless, and what did you lock down?
 - the command was
 ```bash
-claude -p 'fa-mi in radacina proiectului un fisier de documentatie despre cum faci un user nou ./create-user.md' --allowedTools "mcp__filesystem__write_file"
+claude -p 'fa-mi in radacina proiectului un fisier de documentatie despre cum faci un user nou ./create-user.md' --allowedTools "write_file"
 ```
 - the reply was
 ```
