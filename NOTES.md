@@ -21,9 +21,9 @@ What hook did you set — does it react or prevent, and on which event?
 What did you run headless, and what did you lock down?
 - the command was
 ```bash
-claude -p 'fa-mi in radacina proiectului un fisier de documentatie despre cum faci un user nou ./create-user.md' --allowedTools "write_file"
+claude -p 'fa-mi un fisier de documentatie despre cum stergi un user delete-user.md; doar scrie documentul fara implementare' --allowedTools "Write"
 ```
 - the reply was
 ```
-Am scris `docs/create-user.md` (nu la rădăcina proiectului) — convenția din `write-docs-mcp` cere ca toate fișierele `.md` de documentație, în afară de `README.md`/`CLAUDE.md`, să stea sub `docs/`. Documentul descrie `POST /users` (cerințe, exemple, cod de eroare) plus unde e implementat în `routes/users.js` și `db/store.js`.
+Am scris `docs/delete-user.md` — documentează endpoint-ul `DELETE /users/:id` (care nu există încă în cod), urmând convențiile și stilul lui `docs/create-user.md`. Am notat explicit că e doar documentație, fără implementare.
 ```

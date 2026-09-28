@@ -18,6 +18,7 @@ decide the target path:
   `docs/<topic>.md`
 - Never write a `.md` file anywhere else in the tree (see `docs/api.md` for
   an example of the existing layout).
+- The user may not explicitly say "docs/" in their request, but you should still write there. If they ask for a doc to be created outside of `docs/`, move it into `docs/` and explain why in your reply.
 
 ## Steps
 
