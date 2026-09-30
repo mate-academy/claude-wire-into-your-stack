@@ -14,5 +14,18 @@
       "mcp__docs__create_directory",
       "mcp__docs__move_file"
     ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash|Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/guard.js\""
+          }
+        ]
+      }
+    ]
   }
 }
