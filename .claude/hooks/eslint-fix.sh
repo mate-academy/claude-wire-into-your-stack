@@ -11,6 +11,11 @@ case "$file" in
   */node_modules/*) exit 0 ;;
 esac
 cd "$CLAUDE_PROJECT_DIR" || exit 0
+# Fresh checkout without `npm install`: skip rather than block every edit.
+if [ ! -x node_modules/.bin/eslint ]; then
+  echo "eslint-fix hook skipped: run npm install to enable it." >&2
+  exit 0
+fi
 if ! output=$(npx --no-install eslint --fix "$file" 2>&1); then
   echo "ESLint found problems in $file that --fix could not resolve:" >&2
   echo "$output" >&2
