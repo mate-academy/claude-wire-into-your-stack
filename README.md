@@ -34,6 +34,14 @@ On your branch of the repo:
 2. Have Claude Code installed and signed in (`claude --version`), and `gh auth login` done so Claude can open the pull request.
 3. Get the repo onto your machine (clone it, or open it from the platform) and open a terminal in the project folder.
 
+### Project MCP server (fetch)
+
+The repo ships a project-scoped `fetch` server in `.mcp.json`, run with `uvx`. To use it:
+
+1. Install [uv](https://docs.astral.sh/uv/), which provides `uvx`: `winget install astral-sh.uv` on Windows, or `brew install uv` on macOS. Restart your terminal afterwards so `uvx` is on your PATH.
+2. Start Claude Code in the project folder and approve the `fetch` server when prompted.
+3. Check it with `claude mcp list` — `fetch` should show as connected.
+
 ### Tasks
  
 #### 1. Connect a server the project can use
