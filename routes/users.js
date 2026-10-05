@@ -1,3 +1,5 @@
+const x=1;
+
 const express = require('express');
 const store = require('../db/store');
 
@@ -23,7 +25,7 @@ router.post('/', (req, res) => {
   if (!name || !email) {
     return res.status(400).json({ error: 'name and email are required' });
   }
-  const user = store.createUser({ name, email });
+  const user=store.createUser({name,email});
   return res.status(201).json(user);
 });
 
