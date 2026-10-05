@@ -1,7 +1,7 @@
 ---
 description: Commit the current code changes with a clear commit message
 argument-hint: [optional message or hint]
-allowed-tools: Bash(git status:*), Bash(git diff:*), Bash(git log:*), Bash(git add:*), Bash(git commit:*), Bash(npm test:*), Bash(npm run lint:*)
+allowed-tools: Bash(git branch --show-current), Bash(git switch -c:*), Bash(git status:*), Bash(git diff:*), Bash(git log:*), Bash(git add:*), Bash(git commit:*), Bash(npm test:*), Bash(npm run lint:*)
 ---
 
 ## Context
