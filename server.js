@@ -14,7 +14,7 @@ const PORT = process.env.PORT || 3000;
 // can import the app without opening a port.
 if (require.main === module) {
   app.listen(PORT, () => {
-    console.log(`API listening on http://localhost:${PORT}`);
+    console.log(`API is listening on http://localhost:${PORT}`);
   });
 }
 
