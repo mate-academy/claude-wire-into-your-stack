@@ -1,4 +1,10 @@
 {
+  "permissions": {
+    "allow": [
+      "mcp__fetch__fetch",
+      "mcp__claude-code-docs__search_claude_code_docs"
+    ]
+  },
   "hooks": {
     "PostToolUse": [
       {

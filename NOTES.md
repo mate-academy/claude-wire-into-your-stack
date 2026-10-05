@@ -1,11 +1,26 @@
 # Notes
 
 ## MCP server and permission rule
-<!-- TODO: no project-level MCP server or permissions block exists yet; fill in what you actually used. -->
-The `claude-code-docs` server (https://code.claude.com/docs/mcp) is connected at the user level. It lets Claude look up Claude Code behavior in the official docs instead of guessing while configuring settings. A rule such as `"permissions": { "allow": ["mcp__claude-code-docs__search_claude_code_docs"] }` would let it search the docs without a prompt each time.
+Two servers are declared at project scope in the committed `.mcp.json`, so anyone who clones the repo gets them:
+
+- **`fetch`** (`uvx mcp-server-fetch`, stdio) lets Claude pull a web page as markdown. I chose it because this is an Express API, and Claude can read the current Express and Node docs instead of guessing at an API from memory. It needs no credentials, so there is no secret to keep out of the file. It requires `uv` to be installed.
+- **`claude-code-docs`** (`https://code.claude.com/docs/mcp`, HTTP) lets Claude look up Claude Code behavior in the official docs while configuring settings, hooks and skills.
+
+`.claude/settings.json` scopes what they may do with `permissions.allow`:
+
+```json
+"permissions": {
+  "allow": [
+    "mcp__fetch__fetch",
+    "mcp__claude-code-docs__search_claude_code_docs"
+  ]
+}
+```
+
+Only the two read-only tools I actually use are allowed without a prompt. Neither server is blanket-allowed (no `mcp__fetch` or `mcp__fetch__*`), so any other tool the servers expose still asks first.
 
 ## Skill: `code-simplifier`
-Captures a repeated workflow: find the recent diff, run tests and lint for a baseline, simplify without changing behavior, re-verify, then report. It also applies the project conventions from CLAUDE.md. The description fires on the user's own words: "Simplify recently changed code without changing its behavior. Use when the user asks to simplify, clean up, tidy, or refactor recent changes, a diff, or the last commit." It states what the skill does and lists the trigger phrases and the things they apply to.
+Captures a repeated workflow: find the recent diff, run tests and lint for a baseline, simplify without changing behavior, re-verify, then report. It also applies the project conventions from CLAUDE.md. The description fires on the user's own words: "Simplify recently changed code without changing its behavior. Use when the user asks to: simplify, clean up, tidy, or refactor recent changes, a diff, or the last commit." It states what the skill does and lists the trigger phrases and the things they apply to.
 
 ## Command: `/commit`
 Gathers the branch, status, diff, and recent commits up front with `!` shell injection. It creates a branch if on `main`, runs `npm test` and `npm run lint` and stops on failure, stages files by name, matches the recent commit style, and never pushes or uses `--no-verify`. It's worth a shortcut because commits happen constantly, and this makes every one run the same checks and follow the same safety rules. `allowed-tools` limits it to the git and npm commands it needs.

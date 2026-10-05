@@ -22,14 +22,18 @@ process.stdin.on('end', () => {
   if (!fs.existsSync(bin('prettier')) || !fs.existsSync(bin('eslint'))) return; // not installed yet
 
   try {
-    execFileSync(bin('prettier'), ['--write', file], { cwd: root, stdio: 'ignore' });
+    execFileSync(bin('prettier'), ['--write', file], {
+      cwd: root,
+      stdio: 'ignore',
+    });
     execFileSync(bin('eslint'), ['--fix', file], {
       cwd: root,
-      stdio: ['ignore', 'ignore', 'pipe'],
+      stdio: ['ignore', 'pipe', 'pipe'],
     });
   } catch (err) {
     // Remaining lint errors that --fix can't resolve: surface them to Claude.
-    process.stderr.write(String(err.stderr || err.message));
+    // ESLint reports findings on stdout, so prefer that over stderr.
+    process.stderr.write(String(err.stdout || err.stderr || err.message));
     process.exit(2);
   }
 });
