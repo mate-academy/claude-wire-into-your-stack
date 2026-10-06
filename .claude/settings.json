@@ -1,0 +1,19 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit|NotebookEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node -e 'let s=\"\"; process.stdin.on(\"data\", c => s += c).on(\"end\", () => { const x = JSON.parse(s); const f = x.tool_input?.file_path ?? x.tool_input?.notebook_path; if (f) console.log(f); });' | { read -r f; [ -n \"$f\" ] && npx --no-install prettier --write --ignore-unknown \"$f\"; } 2>/dev/null || true",
+            "statusMessage": "Formatting..."
+          }
+        ]
+      }
+    ]
+  },
+  "permissions": {
+    "allow": ["mcp__memory", "mcp__context7"]
+  }
+}
