@@ -8,7 +8,7 @@
         "npx",
         "-y",
         "@modelcontextprotocol/server-filesystem",
-        "C:\\Users\\nuomn\\source\\kodree\\claude-wire-into-your-stack"
+        "${cwd}"
       ],
       "env": {}
     }
