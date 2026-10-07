@@ -9,5 +9,3 @@ review command that checks diffs against a checklist
 <!-- What did you run headless, and what did you lock down? -->
 claude -p "read the server.js file and tell me what routes are registered" --allowedTools mcp__filesystem__read_file
 allowed read only access because that's all that was neeeded
-
-
