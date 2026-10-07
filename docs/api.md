@@ -32,3 +32,13 @@ Creates a user. Body requires `name` and `email`; returns `201` with the created
 
 ### PUT /users/:id
 Updates an existing user. Body may include `name`, `email`, or both. Returns the updated user, `400` if neither field is given, or `404` if the user does not exist.
+
+## Products
+
+A product looks like:
+```json
+{ "id": 1, "name": "Notebook", "price": 4.99 }
+```
+
+### POST /products
+Creates a product. Body requires `name` (non-empty string) and `price` (non-negative number); returns `201` with the created product, or `400` if either is missing or invalid.
