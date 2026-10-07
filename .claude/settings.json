@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": ["mcp__filesystem__read_file", "mcp__filesystem__read_directory"]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit",
+        "command": "prettier --write ${CLAUDE_FILE}"
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write",
+        "command": "npm run lint"
+      }
+    ]
+  }
+}

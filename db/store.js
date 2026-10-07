@@ -3,6 +3,8 @@
 
 let users = [];
 let nextId = 1;
+let products = [];
+let nextProductId = 1;
 
 function seed() {
   users = [
@@ -10,6 +12,8 @@ function seed() {
     { id: 2, name: 'Alan Turing', email: 'alan@example.com' },
   ];
   nextId = 3;
+  products = [];
+  nextProductId = 1;
 }
 seed();
 
@@ -36,9 +40,23 @@ function updateUser(id, fields) {
   return user;
 }
 
+function createProduct({ name, price }) {
+  const product = { id: nextProductId, name, price };
+  nextProductId += 1;
+  products.push(product);
+  return product;
+}
+
 // Reset to the seed data. Used by the tests so each one starts clean.
 function reset() {
   seed();
 }
 
-module.exports = { listUsers, getUser, createUser, updateUser, reset };
+module.exports = {
+  listUsers,
+  getUser,
+  createUser,
+  updateUser,
+  createProduct,
+  reset,
+};
