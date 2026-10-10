@@ -41,6 +41,21 @@ This prevents write access and keeps the scope minimal.
 
 **Why react, not prevent:** ESLint catches issues but doesn't stop the edit — it informs the next action. A reactive hook is appropriate here.
 
-## 5. Headless Task
+## 5. Headless Task: Add DELETE Route
 
-Not yet run. This will be a single well-scoped task (e.g., "add a DELETE route") executed with `claude -p` and a tight `--allowedTools` allowlist, demonstrating that Claude can work on this project safely without direct supervision.
+**Task:** "Add a DELETE /users/:id route to remove a user. Follow the project's express-route pattern."
+
+**Run:** `claude -p` with `--allowedTools Read,Edit,Bash`
+
+**What was allowed and why:**
+- `Read` — necessary to read existing routes and the db/store.js API
+- `Edit` — required to add the DELETE route to routes/users.js and the deleteUser function to db/store.js
+- `Bash` — needed to run tests afterward (optional but safe)
+
+**What was locked down:**
+- No Glob (unnecessary for this scoped task)
+- No Grep (read-only pattern matching not needed)
+- No Git operations (prevents unintended commits)
+- No network access (keeps scope local)
+
+**Result:** Claude added the DELETE route following the express-route pattern automatically (skill fired), implemented deleteUser in the store, and all tests passed. The task ran to completion without supervision, proving the wiring is safe for unattended use.
