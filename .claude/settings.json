@@ -1,0 +1,32 @@
+{
+  "permissions": {
+    "allow": [
+      {
+        "server": "mcp__filesystem__list_resources",
+        "tools": ["mcp__filesystem__list_resources"],
+        "description": "List documentation files"
+      },
+      {
+        "server": "mcp__filesystem__read_file",
+        "tools": ["mcp__filesystem__read_file"],
+        "description": "Read documentation and API specs"
+      }
+    ]
+  },
+  "skills": [
+    {
+      "name": "express-route",
+      "path": ".claude/skills/express-route",
+      "description": "When adding a new Express route or endpoint, follow the project pattern: validate input first, use db/store.js for data access, return errors as {error: 'message'}, mount in server.js"
+    }
+  ],
+  "hooks": [
+    {
+      "event": "PostToolUse",
+      "matcher": {
+        "tool": "Edit"
+      },
+      "command": "npm run lint"
+    }
+  ]
+}
