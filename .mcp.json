@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "docs": {
+      "command": "npx",
+      "args": ["@modelcontextprotocol/server-filesystem", "docs"],
+      "description": "Access project documentation and API specs"
+    }
+  }
+}
