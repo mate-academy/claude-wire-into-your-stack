@@ -8,6 +8,17 @@ app.use(express.json());
 app.use('/health', healthRouter);
 app.use('/users', usersRouter);
 
+// Error handler: must be registered last and take four arguments.
+app.use((err, req, res, next) => {
+  const status = err.status || err.statusCode || 500;
+  if (status >= 500) {
+    console.error(err);
+  }
+  res.status(status).json({
+    error: status >= 500 ? 'Internal server error' : err.message,
+  });
+});
+
 const PORT = process.env.PORT || 3000;
 
 // Only start listening when run directly (e.g. `npm run dev`), so the tests
