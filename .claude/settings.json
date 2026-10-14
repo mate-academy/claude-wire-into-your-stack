@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "mcp:bash": {
+      "allow": ["read", "write"],
+      "deny": ["delete"]
+    }
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cmd=$(jq -r '.tool_input.command'); if echo \"$cmd\" | grep -iE 'git.*push.*(origin\\s+)?main|git.*push.*HEAD:main'; then echo '{\"continue\": false, \"stopReason\": \"Cannot push directly to main branch. Create a feature branch and submit a pull request instead.\"}'; fi",
+            "shell": "bash"
+          }
+        ]
+      }
+    ]
+  }
+}
