@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__docs__read_text_file",
+      "mcp__docs__list_directory",
+      "mcp__docs__search_files"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd \"$CLAUDE_PROJECT_DIR\" && file=$(cat | jq -r '.tool_input.file_path // empty'); case \"$file\" in *.js) npx eslint --fix \"$file\" ;; esac"
+          }
+        ]
+      }
+    ]
+  }
+}
