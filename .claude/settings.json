@@ -1,0 +1,13 @@
+{
+  "PostToolUse": [
+    {
+      "matcher": "str_replace",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "/check"
+        }
+      ]
+    }
+  ]
+}
