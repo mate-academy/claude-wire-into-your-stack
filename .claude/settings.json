@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__docs-fs__read_text_file",
+      "mcp__docs-fs__list_directory",
+      "mcp__docs-fs__search_files"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/guard-rm-rf.js",
+            "statusMessage": "Checking command against project guards..."
+          }
+        ]
+      }
+    ]
+  }
+}

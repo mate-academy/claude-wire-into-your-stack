@@ -28,6 +28,10 @@ function createUser({ name, email }) {
   return user;
 }
 
+function createUsers(usersData) {
+  return usersData.map((userData) => createUser(userData));
+}
+
 function updateUser(id, fields) {
   const user = getUser(id);
   if (!user) return undefined;
@@ -36,9 +40,29 @@ function updateUser(id, fields) {
   return user;
 }
 
+function deleteUser(id) {
+  const index = users.findIndex((user) => user.id === id);
+  if (index === -1) return false;
+  users.splice(index, 1);
+  return true;
+}
+
+function deleteUsers(ids) {
+  return ids.reduce((count, id) => count + (deleteUser(id) ? 1 : 0), 0);
+}
+
 // Reset to the seed data. Used by the tests so each one starts clean.
 function reset() {
   seed();
 }
 
-module.exports = { listUsers, getUser, createUser, updateUser, reset };
+module.exports = {
+  listUsers,
+  getUser,
+  createUser,
+  createUsers,
+  updateUser,
+  deleteUser,
+  deleteUsers,
+  reset,
+};
