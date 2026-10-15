@@ -6,8 +6,8 @@ let nextId = 1;
 
 function seed() {
   users = [
-    { id: 1, name: 'Ada Lovelace', email: 'ada@example.com' },
-    { id: 2, name: 'Alan Turing', email: 'alan@example.com' },
+    { id: 1, name: "Ada Lovelace", email: "ada@example.com" },
+    { id: 2, name: "Alan Turing", email: "alan@example.com" },
   ];
   nextId = 3;
 }
@@ -36,9 +36,23 @@ function updateUser(id, fields) {
   return user;
 }
 
+function deleteUser(id) {
+  const index = users.findIndex((u) => u.id === id);
+  if (index === -1) return false;
+  users.splice(index, 1);
+  return true;
+}
+
 // Reset to the seed data. Used by the tests so each one starts clean.
 function reset() {
   seed();
 }
 
-module.exports = { listUsers, getUser, createUser, updateUser, reset };
+module.exports = {
+  listUsers,
+  getUser,
+  createUser,
+  updateUser,
+  deleteUser,
+  reset,
+};

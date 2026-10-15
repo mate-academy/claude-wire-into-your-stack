@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "write",
+        "command": [
+          "npx",
+          "prettier",
+          "--write",
+          "${MCP_SERVER_FILESYSTEM_CWD}"
+        ]
+      }
+    ]
+  }
+}

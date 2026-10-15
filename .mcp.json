@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "./docs"]
+    }
+  },
+  "permissions": {
+    "filesystem": {
+      "allow": ["read_file", "list_directory"]
+    }
+  }
+}
