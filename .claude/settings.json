@@ -1,0 +1,22 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "npm run lint"
+          }
+        ]
+      }
+    ]
+  },
+  "permissions": {
+    "allow": [
+      "mcp__filesystem__list_allowed_directories",
+      "mcp__filesystem__list_directory",
+      "mcp__filesystem__read_text_file"
+    ]
+  }
+}
