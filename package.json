@@ -8,14 +8,16 @@
     "dev": "node server.js",
     "start": "node server.js",
     "test": "node --test",
-    "lint": "eslint server.js routes db tests"
+    "lint": "eslint server.js routes db tests",
+    "count-rows": "node scripts/count-rows.js"
   },
   "dependencies": {
     "express": "^4.19.2"
   },
   "devDependencies": {
-    "eslint": "^9.13.0",
     "@eslint/js": "^9.13.0",
+    "eslint": "^9.13.0",
+    "prettier": "^3.9.4",
     "supertest": "^7.0.0"
   }
 }
