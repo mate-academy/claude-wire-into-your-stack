@@ -1,0 +1,36 @@
+{
+  "enabledMcpjsonServers": ["docs"],
+  "permissions": {
+    "allow": [
+      "mcp__docs__read_file",
+      "mcp__docs__read_text_file",
+      "mcp__docs__read_media_file",
+      "mcp__docs__read_multiple_files",
+      "mcp__docs__list_directory",
+      "mcp__docs__list_directory_with_sizes",
+      "mcp__docs__directory_tree",
+      "mcp__docs__search_files",
+      "mcp__docs__get_file_info",
+      "mcp__docs__list_allowed_directories"
+    ],
+    "deny": [
+      "mcp__docs__write_file",
+      "mcp__docs__edit_file",
+      "mcp__docs__create_directory",
+      "mcp__docs__move_file"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR/.claude/hooks/block-risky-bash.sh\""
+          }
+        ]
+      }
+    ]
+  }
+}
