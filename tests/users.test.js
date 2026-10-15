@@ -37,3 +37,15 @@ test('PUT /users/:id returns 404 for a missing user', async () => {
   const res = await request(app).put('/users/999').send({ name: 'Nobody' });
   assert.equal(res.status, 404);
 });
+
+test('POST /users returns 400 with a JSON error when name or email is missing', async () => {
+  const res = await request(app).post('/users').send({ name: 'Grace Hopper' });
+  assert.equal(res.status, 400);
+  assert.ok(res.body.error);
+});
+
+test('PUT /users/:id returns 400 with a JSON error when neither name nor email is given', async () => {
+  const res = await request(app).put('/users/1').send({});
+  assert.equal(res.status, 400);
+  assert.ok(res.body.error);
+});
