@@ -37,3 +37,27 @@ test('PUT /users/:id returns 404 for a missing user', async () => {
   const res = await request(app).put('/users/999').send({ name: 'Nobody' });
   assert.equal(res.status, 404);
 });
+
+test('GET /users/:id/profile returns the user', async () => {
+  const res = await request(app).get('/users/1/profile');
+  assert.equal(res.status, 200);
+  assert.equal(res.body.name, 'Ada Lovelace');
+});
+
+test('GET /users/:id/profile returns 404 for a missing user', async () => {
+  const res = await request(app).get('/users/999/profile');
+  assert.equal(res.status, 404);
+});
+
+test('DELETE /users/:id removes an existing user', async () => {
+  const res = await request(app).delete('/users/1');
+  assert.equal(res.status, 204);
+
+  const getRes = await request(app).get('/users/1');
+  assert.equal(getRes.status, 404);
+});
+
+test('DELETE /users/:id returns 404 for a missing user', async () => {
+  const res = await request(app).delete('/users/999');
+  assert.equal(res.status, 404);
+});

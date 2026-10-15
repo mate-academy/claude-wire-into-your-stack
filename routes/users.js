@@ -40,4 +40,25 @@ router.put('/:id', (req, res) => {
   return res.json(user);
 });
 
+/**
+ * GET /users/:id/profile — fetch a user's profile, or 404 if it doesn't exist.
+ * Currently an alias for GET /users/:id (no separate profile data yet).
+ */
+router.get('/:id/profile', (req, res) => {
+  const user = store.getUser(Number(req.params.id));
+  if (!user) {
+    return res.status(404).json({ error: 'User not found' });
+  }
+  return res.json(user);
+});
+
+// DELETE /users/:id — remove a user, or 404 if it doesn't exist.
+router.delete('/:id', (req, res) => {
+  const deleted = store.deleteUser(Number(req.params.id));
+  if (!deleted) {
+    return res.status(404).json({ error: 'User not found' });
+  }
+  return res.status(204).end();
+});
+
 module.exports = router;
