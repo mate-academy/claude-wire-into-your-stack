@@ -1,0 +1,19 @@
+{
+  "enabledMcpjsonServers": ["fetch"],
+  "permissions": {
+    "allow": ["mcp__fetch__fetch"]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/check-route-conventions.sh"
+          }
+        ]
+      }
+    ]
+  }
+}
