@@ -1,0 +1,33 @@
+{
+  "enabledMcpjsonServers": [
+    "context7",
+    "github"
+  ],
+  "permissions": {
+    "allow": [
+      "mcp__context7__resolve-library-id",
+      "mcp__context7__query-docs"
+    ],
+    "deny": [
+      "mcp__github__delete_repository",
+      "mcp__github__delete_file",
+      "mcp__github__merge_pull_request",
+      "mcp__github__push_files"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "statusMessage": "Linting edited file...",
+            "timeout": 30,
+            "command": "jq -r '.tool_input.file_path // .tool_response.filePath' | { read -r f; [ -n \"$f\" ] || exit 0; case \"$f\" in \"$CLAUDE_PROJECT_DIR\"/*.js|\"$CLAUDE_PROJECT_DIR\"/*/*.js) ;; *) exit 0 ;; esac; cd \"$CLAUDE_PROJECT_DIR\" && npx --no-install eslint \"$f\" >&2 || exit 2; }"
+          }
+        ]
+      }
+    ]
+  }
+}
