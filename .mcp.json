@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "course-api": {
+      "command": "python3",
+      "args": ["mcp_server.py"],
+      "description": "MCP server for Course API project — provides tools to read routes, understand project structure, and access documentation"
+    }
+  }
+}

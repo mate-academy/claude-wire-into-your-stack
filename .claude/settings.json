@@ -1,0 +1,10 @@
+{
+  "hooks": [
+    {
+      "event": "before-commit",
+      "action": "command",
+      "description": "Lint code before committing",
+      "command": "npm run lint"
+    }
+  ]
+}
