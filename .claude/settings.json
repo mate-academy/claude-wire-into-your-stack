@@ -1,0 +1,12 @@
+{
+  "hooks": [
+    {
+      "event": "PostToolUse",
+      "matcher": {
+        "tool": "Edit",
+        "filePattern": "routes/**/*.js"
+      },
+      "command": "echo 'Route file modified. Ensure error responses use { \"error\": \"message\" } format.'"
+    }
+  ]
+}
