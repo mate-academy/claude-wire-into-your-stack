@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "docs-filesystem": {
+      "command": "npx.cmd",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "${CLAUDE_PROJECT_DIR:-.}/docs"
+      ]
+    }
+  }
+}
