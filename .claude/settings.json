@@ -1,0 +1,15 @@
+﻿{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "WriteFile|EditFile",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "npm test"
+          }
+        ]
+      }
+    ]
+  }
+}
