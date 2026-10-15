@@ -1,0 +1,1 @@
+Review the codebase for adherence to architecture conventions, proper error handling, input validation, and test coverage. Return a concise bulleted list of findings.
