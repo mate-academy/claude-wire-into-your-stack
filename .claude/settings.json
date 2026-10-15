@@ -1,0 +1,22 @@
+{
+  "enabledMcpjsonServers": ["docs-fs"],
+  "permissions": {
+    "allow": [
+      "mcp__docs-fs__read_text_file",
+      "mcp__docs-fs__list_directory"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/lint-fix.js"
+          }
+        ]
+      }
+    ]
+  }
+}
