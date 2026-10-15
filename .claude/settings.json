@@ -1,0 +1,46 @@
+{
+  "model": "opusplan",
+  "language": "English",
+  "tui": "fullscreen",
+  "remoteControlAtStartup": true,
+  "env": {
+    "MCP_TIMEOUT": "60000"
+  },
+  "permissions": {
+    "allow": [
+      "mcp__filesystem__read_text_file",
+      "mcp__filesystem__read_multiple_files",
+      "mcp__filesystem__list_directory",
+      "mcp__filesystem__list_directory_with_sizes",
+      "mcp__filesystem__directory_tree",
+      "mcp__filesystem__search_files",
+      "mcp__filesystem__get_file_info",
+      "mcp__filesystem__list_allowed_directories"
+    ]
+  },
+  "extraKnownMarketplaces": {
+    "claude-plugins-official": {
+      "source": {
+        "source": "github",
+        "repo": "anthropics/claude-plugins-official"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "skill-creator@claude-plugins-official": true
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -r '.tool_input.file_path' | tr -d '\\r' | { read -r f; case \"$f\" in *node_modules*) exit 0;; *.js) npx eslint --fix \"$f\";; esac; } 2>/dev/null || true",
+            "statusMessage": "Running eslint --fix"
+          }
+        ]
+      }
+    ]
+  }
+}

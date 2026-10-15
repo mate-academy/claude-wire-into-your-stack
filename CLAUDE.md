@@ -5,7 +5,9 @@ A small Express API used as the working project throughout the Claude Code cours
 ## Commands
 - `npm run dev` — start the API locally on port 3000
 - `npm test` — run the test suite (Node's built-in test runner)
+- `node --test tests/users.test.js` — run a single test file
 - `npm run lint` — lint the codebase with ESLint
+- CI (`.github/workflows/ci.yml`) runs `npm run lint` and `npm test` on every push/PR to `main`
 
 ## Architecture
 - `server.js` — entry point; creates the Express app, mounts the routers, and listens

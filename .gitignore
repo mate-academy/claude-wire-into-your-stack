@@ -2,6 +2,7 @@ node_modules/
 .env
 .env.*
 npm-debug.log*
+scripts/imagelist-task.log
 
 # Personal, machine-local Claude settings (project-scoped settings ARE committed)
 .claude/settings.local.json

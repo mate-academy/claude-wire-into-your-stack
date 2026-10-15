@@ -16,6 +16,7 @@ module.exports = [
     },
     rules: {
       'no-unused-vars': ['warn', { argsIgnorePattern: '^(req|res|next)$' }],
+      indent: ['error', 2],
     },
   },
 ];
