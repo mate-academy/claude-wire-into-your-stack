@@ -1,0 +1,30 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__project-docs__list_directory",
+      "mcp__project-docs__read_text_file",
+      "Bash(npm test:*)",
+      "Bash(npm run lint:*)"
+    ],
+    "ask": [
+      "Bash(git push:*)"
+    ],
+    "deny": [
+      "Read(./.env)",
+      "Bash(git push --force:*)"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "npm run lint"
+          }
+        ]
+      }
+    ]
+  }
+}
