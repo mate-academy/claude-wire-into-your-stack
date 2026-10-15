@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "fetch": {
+      "command": "npx",
+      "args": ["@anthropic-ai/fetch-mcp"]
+    }
+  },
+  "permissions": [
+    {
+      "server": "fetch",
+      "tools": ["fetch"]
+    }
+  ]
+}

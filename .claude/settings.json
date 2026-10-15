@@ -1,0 +1,13 @@
+{
+  "hooks": [
+    {
+      "event": "PostToolUse",
+      "when": {
+        "tool": "Edit"
+      },
+      "then": {
+        "command": "npm run lint"
+      }
+    }
+  ]
+}
