@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": ["@anthropic-ai/mcp-server-filesystem", "--root", "."]
+    }
+  }
+}
