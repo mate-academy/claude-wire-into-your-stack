@@ -2,6 +2,9 @@
 
 A small Express API used as the working project throughout the Claude Code course.
 
+## Language
+- Respond in Russian (RU) in this project.
+
 ## Commands
 - `npm run dev` — start the API locally on port 3000
 - `npm test` — run the test suite (Node's built-in test runner)
