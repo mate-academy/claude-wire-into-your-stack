@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "kapa-website-docs": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "C:\\DATA\\Dropbox\\KAPA_Website"
+      ]
+    }
+  }
+}

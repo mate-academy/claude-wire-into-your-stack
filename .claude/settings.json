@@ -1,0 +1,38 @@
+{
+  "permissions": {
+    "additionalDirectories": ["C:\\DATA\\Dropbox\\KAPA_Website"],
+    "allow": [
+      "mcp__kapa-website-docs__read_text_file",
+      "mcp__kapa-website-docs__read_media_file",
+      "mcp__kapa-website-docs__read_multiple_files",
+      "mcp__kapa-website-docs__list_directory",
+      "mcp__kapa-website-docs__list_directory_with_sizes",
+      "mcp__kapa-website-docs__directory_tree",
+      "mcp__kapa-website-docs__search_files",
+      "mcp__kapa-website-docs__get_file_info",
+      "mcp__kapa-website-docs__list_allowed_directories"
+    ],
+    "deny": [
+      "mcp__kapa-website-docs__write_file",
+      "mcp__kapa-website-docs__edit_file",
+      "mcp__kapa-website-docs__create_directory",
+      "mcp__kapa-website-docs__move_file"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash|PowerShell",
+        "hooks": [
+          {
+            "type": "command",
+            "shell": "powershell",
+            "command": "$hookInput = [Console]::In.ReadToEnd() | ConvertFrom-Json; $cmd = $hookInput.tool_input.command; if ($cmd -and ($cmd -match '(?i)\\b(rm|del|erase|rd|rmdir|Remove-Item)\\b')) { Write-Output '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"deny\",\"permissionDecisionReason\":\"File/directory deletion commands are blocked by policy.\"}}' }",
+            "timeout": 10,
+            "statusMessage": "Checking for file deletion commands..."
+          }
+        ]
+      }
+    ]
+  }
+}
