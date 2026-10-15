@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__filesystem__read_file",
+      "mcp__filesystem__list_directory",
+      "mcp__filesystem__search_files",
+      "mcp__filesystem__list_allowed_directories"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "npm run lint",
+            "timeout": 60
+          }
+        ]
+      }
+    ]
+  }
+}
