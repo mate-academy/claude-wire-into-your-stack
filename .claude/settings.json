@@ -1,0 +1,28 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__filesystem__list_directory",
+      "mcp__filesystem__read_file",
+      "mcp__filesystem__get_file_info"
+    ],
+    "deny": [
+      "mcp__filesystem__write_file",
+      "mcp__filesystem__edit_file",
+      "mcp__filesystem__create_directory",
+      "mcp__filesystem__move_file"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/block-force-push.sh"
+          }
+        ]
+      }
+    ]
+  }
+}
