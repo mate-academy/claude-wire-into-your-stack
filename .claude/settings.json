@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__fetch__fetch"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "file=$(jq -r '.tool_input.file_path // empty'); case \"$file\" in *.js) npx eslint --fix \"$file\";; esac"
+          }
+        ]
+      }
+    ]
+  }
+}
