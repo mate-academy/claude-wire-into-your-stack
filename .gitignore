@@ -1,4 +1,5 @@
 node_modules/
+error.log
 .env
 .env.*
 npm-debug.log*
