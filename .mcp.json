@@ -7,7 +7,7 @@
         "/c",
         "npx",
         "-y",
-        "@modelcontextprotocol/server-filesystem",
+        "@modelcontextprotocol/server-filesystem@1.0.0",
         "./docs"
       ],
       "env": {}
