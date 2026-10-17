@@ -4,5 +4,15 @@
       "mcp__docs__read_text_file",
       "mcp__docs__list_directory"
     ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          { "type": "command", "command": "npx eslint --fix . 1>&2 || exit 2" }
+        ]
+      }
+    ]
   }
 }
