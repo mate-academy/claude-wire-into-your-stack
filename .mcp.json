@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "fetch": {
+      "type": "stdio",
+      "command": "C:\\Users\\peeyu\\AppData\\Local\\Microsoft\\WinGet\\Links\\uvx.exe",
+      "args": [
+        "mcp-server-fetch"
+      ]
+    }
+  }
+}
