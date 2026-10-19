@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__project-docs__list",
+      "mcp__project-docs__read"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+         {
+            "type": "command",
+            "command": "bash -lc 'echo HOOK_RAN && npm run lint'"
+          } 
+        ]
+      }
+    ]
+  }
+}

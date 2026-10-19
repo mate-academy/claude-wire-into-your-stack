@@ -8,6 +8,12 @@ router.get('/', (req, res) => {
   res.json(store.listUsers());
 });
 
+// GET /users/active — list only active users. Must be registered before
+// /:id, or Express would treat "active" as an id.
+router.get('/active', (req, res) => {
+  res.json(store.listActiveUsers());
+});
+
 // GET /users/:id — fetch one user, or 404 if it doesn't exist.
 router.get('/:id', (req, res) => {
   const user = store.getUser(Number(req.params.id));

@@ -13,6 +13,22 @@ test('GET /users returns the seeded list', async () => {
   assert.equal(res.body.length, 2);
 });
 
+test('GET /users/active returns only active users', async () => {
+  const res = await request(app).get('/users/active');
+  assert.equal(res.status, 200);
+  assert.ok(Array.isArray(res.body));
+  assert.deepEqual(res.body.map((user) => user.id), [1]);
+});
+
+test('GET /users/active includes newly created users', async () => {
+  await request(app)
+    .post('/users')
+    .send({ name: 'Grace Hopper', email: 'grace@example.com' });
+  const res = await request(app).get('/users/active');
+  assert.equal(res.status, 200);
+  assert.ok(res.body.some((user) => user.name === 'Grace Hopper'));
+});
+
 test('GET /users/:id returns 404 for a missing user', async () => {
   const res = await request(app).get('/users/999');
   assert.equal(res.status, 404);

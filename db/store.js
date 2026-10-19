@@ -6,8 +6,8 @@ let nextId = 1;
 
 function seed() {
   users = [
-    { id: 1, name: 'Ada Lovelace', email: 'ada@example.com' },
-    { id: 2, name: 'Alan Turing', email: 'alan@example.com' },
+    { id: 1, name: 'Ada Lovelace', email: 'ada@example.com', active: true },
+    { id: 2, name: 'Alan Turing', email: 'alan@example.com', active: false },
   ];
   nextId = 3;
 }
@@ -17,12 +17,16 @@ function listUsers() {
   return users;
 }
 
+function listActiveUsers() {
+  return users.filter((user) => user.active);
+}
+
 function getUser(id) {
   return users.find((user) => user.id === id);
 }
 
 function createUser({ name, email }) {
-  const user = { id: nextId, name, email };
+  const user = { id: nextId, name, email, active: true };
   nextId += 1;
   users.push(user);
   return user;
@@ -41,4 +45,4 @@ function reset() {
   seed();
 }
 
-module.exports = { listUsers, getUser, createUser, updateUser, reset };
+module.exports = { listUsers, listActiveUsers, getUser, createUser, updateUser, reset };

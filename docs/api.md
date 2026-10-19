@@ -18,11 +18,14 @@ Response `200`:
 
 A user looks like:
 ```json
-{ "id": 1, "name": "Ada Lovelace", "email": "ada@example.com" }
+{ "id": 1, "name": "Ada Lovelace", "email": "ada@example.com", "active": true }
 ```
 
 ### GET /users
 Returns an array of all users.
+
+### GET /users/active
+Returns an array of users whose `active` flag is `true`. New users are created active.
 
 ### GET /users/:id
 Returns a single user, or `404` if no user has that id.
