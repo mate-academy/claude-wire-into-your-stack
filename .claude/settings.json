@@ -1,0 +1,30 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__docs__read_text_file",
+      "mcp__docs__list_directory",
+      "mcp__docs__search_files",
+      "Bash(npm test)",
+      "Bash(npm run lint)"
+    ],
+    "deny": [
+      "mcp__docs__write_file",
+      "mcp__docs__edit_file",
+      "mcp__docs__move_file",
+      "mcp__docs__create_directory"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/lint-edited-file.js\""
+          }
+        ]
+      }
+    ]
+  }
+}
