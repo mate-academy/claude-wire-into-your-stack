@@ -17,6 +17,12 @@ Gather the changes with these commands only:
 - `git diff <base>...HEAD`
 - `git status --short` (for work that isn't committed yet)
 
+Describe each file only from what its lines in the diff actually show. Read
+the full diff before writing; never describe a file from its name or path
+alone. Do not guess at what a change enables or is for, and do not use words
+like "likely" or "probably". If the diff doesn't make a change's effect clear,
+say exactly what lines changed and add "(effect unclear from the diff)".
+
 Then reply in exactly this format:
 
 ## Summary
