@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__fetch__fetch"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "grep -Eq '\"file_path\" *: *\"[^\"]*\\.js\"' || exit 0; out=$(npm run lint --silent 2>&1) || { echo \"$out\" >&2; exit 2; }",
+            "timeout": 60,
+            "statusMessage": "Linting..."
+          }
+        ]
+      }
+    ]
+  }
+}
