@@ -1,0 +1,22 @@
+{
+  "enabledMcpjsonServers": ["fetch"],
+  "permissions": {
+    "allow": [
+      "mcp__fetch__fetch"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/lint-fix.js\"",
+            "timeout": 30
+          }
+        ]
+      }
+    ]
+  }
+}
