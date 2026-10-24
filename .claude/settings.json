@@ -1,0 +1,40 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__docs__list_allowed_directories",
+      "mcp__docs__list_directory",
+      "mcp__docs__read_text_file",
+      "mcp__docs__search_files"
+    ],
+    "deny": [
+      "mcp__docs__write_file",
+      "mcp__docs__edit_file",
+      "mcp__docs__move_file",
+      "mcp__docs__create_directory"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash|PowerShell",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/guard-bash.js\""
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/lint-on-edit.js\""
+          }
+        ]
+      }
+    ]
+  }
+}
