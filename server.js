@@ -1,12 +1,16 @@
 const express = require('express');
 const usersRouter = require('./routes/users');
 const healthRouter = require('./routes/health');
+const productsRouter = require('./routes/products');
+const ordersRouter = require('./routes/orders');
 
 const app = express();
 app.use(express.json());
 
 app.use('/health', healthRouter);
 app.use('/users', usersRouter);
+app.use('/products', productsRouter);
+app.use('/orders', ordersRouter);
 
 const PORT = process.env.PORT || 3000;
 

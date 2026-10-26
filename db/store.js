@@ -3,6 +3,10 @@
 
 let users = [];
 let nextId = 1;
+let products = [];
+let nextProductId = 1;
+let orders = [];
+let nextOrderId = 1;
 
 function seed() {
   users = [
@@ -10,6 +14,18 @@ function seed() {
     { id: 2, name: 'Alan Turing', email: 'alan@example.com' },
   ];
   nextId = 3;
+
+  products = [
+    { id: 1, name: 'Widget', price: 9.99 },
+    { id: 2, name: 'Gadget', price: 19.99 },
+  ];
+  nextProductId = 3;
+
+  orders = [
+    { id: 1, product: 'Widget', quantity: 3 },
+    { id: 2, product: 'Gadget', quantity: 1 },
+  ];
+  nextOrderId = 3;
 }
 seed();
 
@@ -36,9 +52,69 @@ function updateUser(id, fields) {
   return user;
 }
 
+function listProducts() {
+  return products;
+}
+
+function getProduct(id) {
+  return products.find((product) => product.id === id);
+}
+
+function createProduct({ name, price }) {
+  const product = { id: nextProductId, name, price };
+  nextProductId += 1;
+  products.push(product);
+  return product;
+}
+
+function updateProduct(id, fields) {
+  const product = getProduct(id);
+  if (!product) return undefined;
+  if (fields.name !== undefined) product.name = fields.name;
+  if (fields.price !== undefined) product.price = fields.price;
+  return product;
+}
+
+function listOrders() {
+  return orders;
+}
+
+function getOrder(id) {
+  return orders.find((order) => order.id === id);
+}
+
+function createOrder({ product, quantity }) {
+  const order = { id: nextOrderId, product, quantity };
+  nextOrderId += 1;
+  orders.push(order);
+  return order;
+}
+
+function updateOrder(id, fields) {
+  const order = getOrder(id);
+  if (!order) return undefined;
+  if (fields.product !== undefined) order.product = fields.product;
+  if (fields.quantity !== undefined) order.quantity = fields.quantity;
+  return order;
+}
+
 // Reset to the seed data. Used by the tests so each one starts clean.
 function reset() {
   seed();
 }
 
-module.exports = { listUsers, getUser, createUser, updateUser, reset };
+module.exports = {
+  listUsers,
+  getUser,
+  createUser,
+  updateUser,
+  listProducts,
+  getProduct,
+  createProduct,
+  updateProduct,
+  listOrders,
+  getOrder,
+  createOrder,
+  updateOrder,
+  reset,
+};
