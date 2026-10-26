@@ -5,6 +5,8 @@ let users = [];
 let nextId = 1;
 let products = [];
 let nextProductId = 1;
+let orders = [];
+let nextOrderId = 1;
 
 function seed() {
   users = [
@@ -18,6 +20,12 @@ function seed() {
     { id: 2, name: 'Gadget', price: 19.99 },
   ];
   nextProductId = 3;
+
+  orders = [
+    { id: 1, product: 'Widget', quantity: 3 },
+    { id: 2, product: 'Gadget', quantity: 1 },
+  ];
+  nextOrderId = 3;
 }
 seed();
 
@@ -67,6 +75,29 @@ function updateProduct(id, fields) {
   return product;
 }
 
+function listOrders() {
+  return orders;
+}
+
+function getOrder(id) {
+  return orders.find((order) => order.id === id);
+}
+
+function createOrder({ product, quantity }) {
+  const order = { id: nextOrderId, product, quantity };
+  nextOrderId += 1;
+  orders.push(order);
+  return order;
+}
+
+function updateOrder(id, fields) {
+  const order = getOrder(id);
+  if (!order) return undefined;
+  if (fields.product !== undefined) order.product = fields.product;
+  if (fields.quantity !== undefined) order.quantity = fields.quantity;
+  return order;
+}
+
 // Reset to the seed data. Used by the tests so each one starts clean.
 function reset() {
   seed();
@@ -81,5 +112,9 @@ module.exports = {
   getProduct,
   createProduct,
   updateProduct,
+  listOrders,
+  getOrder,
+  createOrder,
+  updateOrder,
   reset,
 };
