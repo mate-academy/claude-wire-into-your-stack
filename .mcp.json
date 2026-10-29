@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "docs": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "./docs"],
+      "env": {}
+    }
+  }
+}
