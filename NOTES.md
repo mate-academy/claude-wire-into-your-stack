@@ -1,0 +1,11 @@
+# Project notes: wiring Claude into this stack
+
+**Server and permission.** I connected the `fetch` MCP server at project scope, so it's defined in the committed `.mcp.json`. It's useful here for pulling in API references and documentation pages when working on the Express routes. The permission rule in `.claude/settings.json` allows only `mcp__fetch__fetch`. That tool is annotated read-only and has no HTTP method parameter, so the rule can't write anything. Permission rules can't filter by URL, so the rule doesn't restrict which hosts can be fetched.
+
+**Skill.** The `add-resource-route` skill captures the way new resources are added here: a router file in `routes/`, data access through `db/store.js`, mounting in `server.js`, `400`/`404` validation with `{ "error" }` bodies, and tests that call `reset()`. Its description names the trigger ("adding or changing an API resource route ... helpers, its mount in server.js, or its tests") and excludes unrelated edits such as the README and lint config. I haven't yet tested that it fires without being named.
+
+**Command.** `/summarize` lives in `.claude/commands/summarize.md`. It runs `git status`, the commit log since the reference point, and the diff stats, then reads the full diff and groups the changes by purpose. It's worth a shortcut because the same steps repeat at the end of every working session, and the grouping instructions keep the output consistent.
+
+**Hook.** The hook is a `PreToolUse` hook on the `Bash` tool, defined at project scope in `.claude/settings.json`. It runs `.claude/hooks/lint-before-commit.sh`, which lints before any `git commit`. It prevents rather than reacts: if lint fails, the script exits with code 2 and the commit is blocked. I tested the script directly with clean and broken inputs. I haven't confirmed that it fires during a live session, because hook settings may only load at session start.
+
+**Headless task.** I ran `claude -p` with `--allowedTools "Read" "Grep"` and asked it to list the routes in `routes/books.js` without modifying any files. It returned the three book routes with line references and exited 0. Locking down to read-only tools means the run couldn't edit or execute anything.
