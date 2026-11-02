@@ -1,0 +1,19 @@
+# NOTES
+
+## Server (MCP)
+I connected the `docs` server (`@modelcontextprotocol/server-filesystem`) at project scope, so it lives in the committed `.mcp.json`. It is pointed only at `./docs`, needs no credentials, and gives Claude the API reference (`docs/api.md`) as a source of truth for the endpoints. The permission rule in `.claude/settings.json` (`permissions.allow`) allows only the read-only tools `mcp__docs__read_text_file`, `mcp__docs__list_directory` and `mcp__docs__search_files`, not the whole server, so Claude cannot write, edit or move files through it. I used it on a real task: Claude read `api.md` through `docs` and checked it against `routes/`. All routes were documented, and no permission prompt appeared.
+
+## Skill
+The `express-route` skill (`.claude/skills/express-route/SKILL.md`) captures how a route is written in this project: one router file per resource mounted in `server.js`, data access only through `db/store.js`, `400`/`404` validation, `{ "error": "message" }` errors, tests with `node:test` + `supertest` + `store.reset()`, an entry in `docs/api.md`, and a final `npm test` and `npm run lint`. The description starts with "Use when adding, changing or removing an HTTP endpoint/route", gives concrete example requests, and ends with "Not for config, CI or non-route changes", so it fires on endpoint work and nothing else. I checked that it triggers when asked to add an endpoint without naming the skill.
+
+## Command
+`/check-conventions [file]` (`.claude/commands/check-conventions.md`) reviews a file passed as `$ARGUMENTS`, or the current `git diff main` when empty, against the conventions in CLAUDE.md. It then runs `npm test` and `npm run lint` and returns a ✅/❌ checklist with `file:line` for each failure and a one-line verdict. It is worth a shortcut because I run the same review before every PR. It is read-only (`allowed-tools` limits it to read/search, `git diff`, `npm test`, `npm run lint`). Run on `routes/users.js`, it worked as intended and reported real gaps: incomplete input validation (e.g. a non-numeric `:id`, empty or `null` `name` on PUT) and missing `400` tests for `POST /users` and `PUT /users/:id`.
+
+## Hook
+The hook reacts rather than prevents: it runs on `PostToolUse` with the matcher `Edit|Write`, so it fires right after Claude edits or writes a file, and the command is `node "$CLAUDE_PROJECT_DIR/.claude/hooks/lint-fix.js"`. The script runs `eslint --fix` on edited JS files in `server.js`, `routes/`, `db/` and `tests/`, and exits with code 2 and the ESLint output on stderr if anything is left, so Claude sees the problem and fixes it. I check ESLint's output as well as its exit code, because `no-unused-vars` is only a warning in this project and ESLint exits 0 on warnings. I triggered it on purpose by asking Claude to add unused variables to `routes/health.js`: the hook returned a blocking error listing `no-unused-vars` for both variables (the first run missed it for exactly that exit-code reason, which is why the script now checks the output). I reverted the test change afterwards.
+
+## Headless
+I ran a read-only health check headless: `claude -p "Run the test suite and the linter. Summarise in 5 lines: how many tests passed/failed, any lint errors, and which route lacks a 400-case test." --allowedTools "Bash(npm test)" "Bash(npm run lint)" "Read" "Grep"`. It reported 8 tests passed, 0 failed, lint clean, and that `POST /users` and `PUT /users/:id` have no `400` test.
+
+I locked it down to exactly what the task needs: the two npm scripts (`Bash(npm test)`, `Bash(npm run lint)`) plus `Read` and `Grep` to inspect the code. Nothing else is pre-approved, so with nobody watching it cannot edit or write files, run any other shell command, or call the MCP server. Anything outside the list is denied instead of prompting.
+
