@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__fetch__fetch"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [],
+    "PostToolUse": [
+      {
+        "matcher": "Edit",
+        "command": "npx prettier --write $FILE"
+      }
+    ]
+  }
+}
