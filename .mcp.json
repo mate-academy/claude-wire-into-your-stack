@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "docs-readonly": {
+      "command": "node",
+      "args": ["mcp-docs-server/server.js"],
+      "env": { "DOCS_DIR": "~/claude-wire-into-your-stack/docs" }
+    }
+  }
+}
