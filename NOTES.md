@@ -6,7 +6,7 @@ I connected a small local MCP server, `docs-readonly` (`mcp-docs-server/server.j
 
 ## Skill
 
-The skill `what-why-how` captures a repeated way of explaining things: whenever I ask about a topic, the answer should be a short What, then Why, then How. Its description says what it does and names the situations that should trigger it ("asks about, wants explained, or wants a summary of a topic, concept, tool, or technology") and gives example phrasings like "tell me about X" and "explain X". That wording is what lets Claude match it to everyday questions without me typing a command.
+The skill `add-endpoint` (`.claude/skills/add-endpoint/SKILL.md`) captures the workflow that repeats every time this API grows: store helper in `db/store.js`, one route file mounted in `server.js`, validation with `400`/`404` and `{ "error": ... }`, tests, an update to `docs/api.md`, then `npm test` and `npm run lint`. Its description is worded to fire only on API work: it says to use it when the request is to create a route or resource, add a method to a route file, or change an endpoint's behavior, names the files involved, and says not to use it for general questions or non-API work.
 
 ## Command
 
