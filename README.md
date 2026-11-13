@@ -1,5 +1,5 @@
 ## Wire Claude into your stack
- 
+ Hello from Oleksandr
 This is the third project of the course. You'll take everything from Units 5, 6, and 7 and wire Claude into the project itself: connect a server it can use, teach it a skill, give it a command, and set a hook that holds a standard — the way you'd set a project up so everyone's Claude works the same.
  
 This builds on the same repository from the first two projects. Each level's project adds to it, all the way to a shareable plugin at the end — and the wiring you commit here is what that plugin will eventually bundle.
