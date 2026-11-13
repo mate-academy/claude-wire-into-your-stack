@@ -4,12 +4,18 @@ import { z } from "zod";
 import { promises as fs } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import os from "node:os";
 
 // Read-only: this server only uses fs.readdir / fs.stat / fs.readFile.
 // No write, delete, or rename operations exist anywhere in this file.
+// DOCS_DIR is optional; "~" is expanded here because MCP env values are passed through literally.
+function expandHome(p) {
+  return p === "~" || p.startsWith("~/") || p.startsWith("~\\") ? path.join(os.homedir(), p.slice(1)) : p;
+}
 const DOCS_DIR = path.resolve(
-  process.env.DOCS_DIR ||
-    path.join(path.dirname(fileURLToPath(import.meta.url)), "..", "docs"),
+  process.env.DOCS_DIR
+    ? expandHome(process.env.DOCS_DIR)
+    : path.join(path.dirname(fileURLToPath(import.meta.url)), "..", "docs"),
 );
 const MAX_BYTES = 1024 * 1024; // refuse files larger than 1 MB
 
