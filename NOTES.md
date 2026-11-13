@@ -14,7 +14,7 @@ I added `/sumarize <source-file> <destination-file>` (`.claude/commands/sumarize
 
 ## Hook
 
-I set a `PostToolUse` hook with the matcher `Edit|Write` that runs Prettier on the file Claude just changed (`.claude/hooks/format.js`). It reacts rather than prevents: it runs after the edit has happened, cleans up formatting, and never blocks anything. It makes formatting automatic instead of something I have to remember to ask for.
+I set a `PostToolUse` hook with the matcher `Edit|Write` that runs Prettier on the file Claude just changed (`.claude/hooks/format.js`). It reacts rather than prevents: it runs after the edit has happened and cleans up formatting, so it cannot stop the edit itself. If Prettier is missing or fails (for example on a syntax error), the hook exits with code 2 and prints the reason, so Claude sees that the file was not formatted instead of the failure passing silently. It makes formatting automatic instead of something I have to remember to ask for.
 
 ## Headless and lock-down
 
