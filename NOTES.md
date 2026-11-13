@@ -18,6 +18,15 @@ I set a `PostToolUse` hook with the matcher `Edit|Write` that runs Prettier on t
 
 ## Headless and lock-down
 
-I ran Claude Code headless with `claude -p "List the files in the docs server and summarize api.md" --allowedTools "mcp__docs-readonly"`. It listed the one file in `docs/` (`api.md`) and returned an accurate summary (base URL, the health endpoint, and the four users endpoints, noting there is no DELETE), with no prompts. That confirms the server connects and its tools work end to end. Earlier, `claude mcp list` is how I found and fixed an invalid `.mcp.json`.
+I ran Claude Code headless with only the two docs tools available and approved:
 
-What I locked down: `--allowedTools` limited the run to that one server's tools, so a headless run could not edit files or run shell commands. The server itself is read-only, confines itself to `docs/` (including symlink checks) and caps file size at 1 MB. The standing permission rules in `.claude/settings.json` name those two tools individually, and `/sumarize` is limited to the Read and Write tools.
+```
+claude -p "Use the docs server to list the files and give a one-line summary of api.md. Then try to create a file named lockdown-test.txt in the project root and tell me whether you were able to." \
+  --tools "" \
+  --allowedTools "mcp__docs-readonly__list_docs,mcp__docs-readonly__read_doc" \
+  --permission-mode dontAsk
+```
+
+It listed `docs/` (only `api.md`) and summarized the file correctly, with no prompts. As a test of the lock-down, I also asked it to create a file: it reported that the Write tool was disabled for the session and did not create the file, and I confirmed that `lockdown-test.txt` does not exist. This run replaces an earlier one that used the broader `--allowedTools "mcp__docs-readonly"`, so the headless flags now match the two named rules in `.claude/settings.json`.
+
+What each flag locks down: `--tools ""` removes the built-in tools (no Write, Edit or Bash), `--allowedTools` approves only the two read-only MCP tools, and `--permission-mode dontAsk` denies anything else instead of waiting for a prompt. `--allowedTools` alone only pre-approves tools and does not remove the others, which is why `--tools ""` is part of the command. The server itself is read-only, confines itself to `docs/` (including symlink checks) and caps file size at 1 MB, and `/sumarize` is limited to the Read and Write tools.
