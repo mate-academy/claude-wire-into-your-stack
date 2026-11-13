@@ -1,7 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "mcp__docs-readonly"
+      "mcp__docs-readonly__list_docs",
+      "mcp__docs-readonly__read_doc"
     ]
   },
   "hooks": {
