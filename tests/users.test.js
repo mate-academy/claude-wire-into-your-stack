@@ -37,3 +37,24 @@ test('PUT /users/:id returns 404 for a missing user', async () => {
   const res = await request(app).put('/users/999').send({ name: 'Nobody' });
   assert.equal(res.status, 404);
 });
+
+test('DELETE /users/:id removes the user', async () => {
+  const res = await request(app).delete('/users/1');
+  assert.equal(res.status, 204);
+  const after = await request(app).get('/users/1');
+  assert.equal(after.status, 404);
+  const list = await request(app).get('/users');
+  assert.equal(list.body.length, 1);
+});
+
+test('DELETE /users/:id returns 404 for a missing user', async () => {
+  const res = await request(app).delete('/users/999');
+  assert.equal(res.status, 404);
+  assert.ok(res.body.error);
+});
+
+test('DELETE /users/:id returns 400 for a non-integer id', async () => {
+  const res = await request(app).delete('/users/abc');
+  assert.equal(res.status, 400);
+  assert.ok(res.body.error);
+});
