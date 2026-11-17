@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "filesystem": {
+      "command": "bash",
+      "args": ["scripts/mcp-filesystem.sh"]
+    }
+  }
+}
