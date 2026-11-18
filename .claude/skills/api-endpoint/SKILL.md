@@ -67,7 +67,18 @@ test('DELETE /users/:id returns 404 for a missing user', async () => {
 });
 ```
 
-Cover at least the happy path, the `404` case (when there's an id), and the `400` case (when there's a body).
+Cover at least:
+- **the happy path:** valid input → the success status and body.
+- **`404`:** for endpoints that look up a record by id, send an id that matches no record (e.g. `/users/999`) and assert the `{ error }` body.
+- **`400`:** for endpoints that accept a body, send an **invalid or incomplete** body (a required field missing, or no updatable field at all) and assert the `{ error }` body. A valid body must never return `400`.
+
+```js
+test('POST /users returns 400 when email is missing', async () => {
+  const res = await request(app).post('/users').send({ name: 'Grace Hopper' });
+  assert.equal(res.status, 400);
+  assert.deepEqual(res.body, { error: 'name and email are required' });
+});
+```
 
 ## 4. Document it in `docs/api.md`
 Add a `### METHOD /path` entry under the resource's section. Say what it does, what the body requires, and every status code it returns, in the same short style as the existing entries.
