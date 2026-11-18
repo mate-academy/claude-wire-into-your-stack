@@ -37,3 +37,34 @@ test('PUT /users/:id returns 404 for a missing user', async () => {
   const res = await request(app).put('/users/999').send({ name: 'Nobody' });
   assert.equal(res.status, 404);
 });
+
+test('DELETE /users/:id removes an existing user', async () => {
+  const res = await request(app).delete('/users/1');
+  assert.equal(res.status, 204);
+  const after = await request(app).get('/users/1');
+  assert.equal(after.status, 404);
+});
+
+test('DELETE /users/:id returns 404 for a missing user', async () => {
+  const res = await request(app).delete('/users/999');
+  assert.equal(res.status, 404);
+  assert.deepEqual(res.body, { error: 'User not found' });
+});
+
+test('GET /users/search finds a user by email', async () => {
+  const res = await request(app).get('/users/search?email=ada@example.com');
+  assert.equal(res.status, 200);
+  assert.equal(res.body.name, 'Ada Lovelace');
+});
+
+test('GET /users/search returns 400 without email', async () => {
+  const res = await request(app).get('/users/search');
+  assert.equal(res.status, 400);
+  assert.deepEqual(res.body, { error: 'email query parameter is required' });
+});
+
+test('GET /users/search returns 404 for an unknown email', async () => {
+  const res = await request(app).get('/users/search?email=nobody@example.com');
+  assert.equal(res.status, 404);
+  assert.deepEqual(res.body, { error: 'User not found' });
+});
