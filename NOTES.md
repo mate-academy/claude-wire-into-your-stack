@@ -47,7 +47,7 @@ The code templates come from the real `users.js` and `users.test.js`.
 - "What does GET /health return?" → the skill did **not** fire.
 
 ## 3. Command: `/check-conventions [paths]`
-It reviews the branch diff plus uncommitted work, or the paths you pass via `$ARGUMENTS`, against the seven conventions in `CLAUDE.md`:
+It reviews the branch diff plus all uncommitted work, or the paths you pass via `$ARGUMENTS`, against the seven conventions in `CLAUDE.md`:
 - one router per resource
 - no state in routes
 - `400` on bad input
@@ -55,6 +55,8 @@ It reviews the branch diff plus uncommitted work, or the paths you pass via `$AR
 - the `{ error }` shape
 - tests
 - docs
+
+"All uncommitted work" means three diffs: `git diff main...HEAD` (committed on the branch), `git diff --cached` (staged) and `git diff` (unstaged), plus untracked files from `git status`. Plain `git diff` alone would miss anything already staged.
 
 It returns `Verdict: READY | NEEDS CHANGES`, a PASS/FAIL table with `file:line` evidence, and ordered fixes.
 
@@ -65,6 +67,19 @@ It returns `Verdict: READY | NEEDS CHANGES`, a PASS/FAIL table with `file:line` 
 One caveat: one claim in that output was overstated. It said `req.body` can be `undefined`, but on Express 4.22 body-parser defaults it to `{}`. The command gives a reviewer a starting point; it doesn't replace the reviewer.
 
 ## 4. Hook: PostToolUse → ESLint on the edited file (reacts)
+**Where it's registered:** at project scope in `.claude/settings.json`. The script in `.claude/hooks/` is only the program; this entry is what makes Claude run it:
+
+```json
+"hooks": {
+  "PostToolUse": [
+    {
+      "matcher": "Edit|Write|MultiEdit",
+      "hooks": [{ "type": "command", "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/lint-edited-file.js\"", "timeout": 60 }]
+    }
+  ]
+}
+```
+
 **The three choices:**
 - **Event:** `PostToolUse`. The hook reacts after a file is written.
 - **Matcher:** `Edit|Write|MultiEdit`. Only tools that change files.
@@ -76,9 +91,11 @@ One caveat: one claim in that output was overstated. It said `req.body` can be `
 - If ESLint isn't installed yet, it skips with a note.
 - On errors it exits `2`, so the ESLint output goes straight back to Claude, which fixes it in the same turn.
 
+**It reports, it doesn't block:** `PostToolUse` runs after the file has already been written, so exit `2` can't undo or stop the edit. It reports the lint failure to Claude, and Claude then fixes the file. Stopping an action before it happens would need `PreToolUse`. For lint, reacting after the edit is the right fit, because ESLint needs the written file to check.
+
 **Why this standard:** CI fails on lint (`.github/workflows/ci.yml`), so the hook enforces that standard at edit time instead of after a push. I chose a Node script over `jq`/`bash` because every contributor already has Node.
 
-**Triggered on purpose:** I wrote `routes/_hook-demo.js` containing `module.exports = notDefinedAnywhere;`. The hook blocked with `'notDefinedAnywhere' is not defined (no-undef)`. Then I deleted the file.
+**Triggered on purpose:** I wrote `routes/_hook-demo.js` containing `module.exports = notDefinedAnywhere;`. The file was written, then the hook fired and reported `'notDefinedAnywhere' is not defined (no-undef)` back to Claude as a hook error. Then I deleted the file.
 
 ## 5. Headless: docs-drift check with read-only tools
 ```
@@ -102,4 +119,4 @@ claude -p "Using the docs MCP server (mcp__docs__* tools), read api.md, then com
 2. Run `claude` and approve the `docs` server. `/mcp` should show it connected.
 3. Ask Claude to "add a DELETE /users/:id endpoint" and watch `api-endpoint` load.
 4. Run `/check-conventions`.
-5. Ask Claude to write a `.js` file with an undefined variable and watch the hook block it.
+5. Ask Claude to write a `.js` file with an undefined variable. The file is written, then the hook reports the ESLint error and Claude fixes it.

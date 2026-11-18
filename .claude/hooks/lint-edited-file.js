@@ -1,7 +1,14 @@
 #!/usr/bin/env node
 // PostToolUse hook: lint every JavaScript file Claude edits or writes, using the
-// project's own ESLint config (the same check CI runs). On lint errors it exits 2,
-// which feeds the ESLint output back to Claude so it fixes them right away.
+// project's own ESLint config (the same check CI runs).
+//
+// Registered at project scope in .claude/settings.json:
+//   hooks.PostToolUse[].matcher = "Edit|Write|MultiEdit"
+//   hooks.PostToolUse[].hooks[].command = node "$CLAUDE_PROJECT_DIR/.claude/hooks/lint-edited-file.js"
+//
+// PostToolUse runs after the file is already written, so this hook cannot block the
+// edit. On lint errors it exits 2, which reports the ESLint output back to Claude
+// so it fixes the file in its next step.
 const { spawnSync } = require('node:child_process');
 const fs = require('node:fs');
 const path = require('node:path');

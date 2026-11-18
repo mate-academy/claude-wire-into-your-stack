@@ -8,7 +8,7 @@ You are reviewing code in the Course API against its own conventions. This is a 
 
 ## What to review
 - If paths were given, review exactly these: `$ARGUMENTS`
-- If no paths were given, review what changed. Run `git status --short` and `git diff main...HEAD` plus `git diff` (to catch uncommitted work), then review the changed `.js` and `docs/` files.
+- If no paths were given, review what changed. Run `git status --short`, then `git diff main...HEAD` (committed on this branch), `git diff --cached` (staged) and `git diff` (unstaged), so all uncommitted work is covered. Also read any untracked files listed by `git status`. Then review the changed `.js` and `docs/` files.
 
 Read `CLAUDE.md` first, then each file under review. For every route, also read `server.js` (mounting), `db/store.js` (data access), the matching `tests/*.test.js` and `docs/api.md`.
 
