@@ -8,6 +8,20 @@ router.get('/', (req, res) => {
   res.json(store.listUsers());
 });
 
+// GET /users/search?email=... — find a user by email.
+// Defined before /:id so Express doesn't treat "search" as an id.
+router.get('/search', (req, res) => {
+  const { email } = req.query;
+  if (typeof email !== 'string' || email.trim() === '') {
+    return res.status(400).json({ error: 'email query parameter is required' });
+  }
+  const user = store.findUserByEmail(email);
+  if (!user) {
+    return res.status(404).json({ error: 'User not found' });
+  }
+  return res.json(user);
+});
+
 // GET /users/:id — fetch one user, or 404 if it doesn't exist.
 router.get('/:id', (req, res) => {
   const user = store.getUser(Number(req.params.id));
@@ -38,6 +52,15 @@ router.put('/:id', (req, res) => {
     return res.status(404).json({ error: 'User not found' });
   }
   return res.json(user);
+});
+
+// DELETE /users/:id — remove a user, or 404 if it doesn't exist.
+router.delete('/:id', (req, res) => {
+  const removed = store.deleteUser(Number(req.params.id));
+  if (!removed) {
+    return res.status(404).json({ error: 'User not found' });
+  }
+  return res.status(204).end();
 });
 
 module.exports = router;
