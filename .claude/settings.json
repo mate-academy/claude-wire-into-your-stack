@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__filesystem__read_text_file",
+      "mcp__filesystem__list_directory"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd \"$CLAUDE_PROJECT_DIR\" && f=$(node -e 'let s=\"\";process.stdin.on(\"data\",d=>s+=d).on(\"end\",()=>{try{console.log(JSON.parse(s).tool_input.file_path||\"\")}catch(e){}})') && case \"$f\" in *.js|*.cjs|*.mjs) npx --no-install eslint \"$f\" 1>&2 || exit 2 ;; esac"
+          }
+        ]
+      }
+    ]
+  }
+}
