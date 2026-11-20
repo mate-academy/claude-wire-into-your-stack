@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__filesystem__read_directory",
+      "mcp__filesystem__read_file",
+      "mcp__filesystem__list_allowed_directories"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/format.js\"",
+            "timeout": 60,
+            "statusMessage": "Formatage (Prettier)..."
+          }
+        ]
+      }
+    ]
+  }
+}
