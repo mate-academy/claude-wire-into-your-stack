@@ -5,7 +5,7 @@ description: Use when adding, changing, or removing an HTTP endpoint or resource
 
 # Add or change an API endpoint
 
-Every endpoint change in this project touches the same five places. Work through all of them. A change is not done until each item below is handled.
+Every endpoint change in this project follows the same six steps: it touches the same five places (steps 1–5), then gets verified (step 6). Work through all six. A change is not done until each step below is handled.
 
 ## 1. Route — `routes/<resource>.js`
 - One file per resource, exporting an `express.Router()`.

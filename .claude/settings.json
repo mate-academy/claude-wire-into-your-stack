@@ -1,8 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "mcp__fireblocks-docs__search_fireblocks_developer_docs",
-      "mcp__fireblocks-docs__query_docs_filesystem_fireblocks_developer_docs"
+      "mcp__context7__resolve-library-id",
+      "mcp__context7__query-docs"
     ]
   },
   "hooks": {
