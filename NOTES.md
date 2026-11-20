@@ -29,12 +29,13 @@ It runs `node .claude/scripts/tree.js $1` rather than the `tree` program, which 
 A **PreToolUse** hook on the **Bash** tool **prevents** pushes to `main`. It runs `.claude/hooks/block-push-to-main.js` before each Bash command, and exits with code 2 (blocking the call) when a `git push` would update `main` on the remote.
 
 It checks both the local branch and the resolved destination, the way git works it out:
-- explicit refspecs: `main`, `src:main`, `+main`, `refs/heads/main`, `:main` (delete)
+- explicit refspecs: `main`, `src:main`, `+main`, `refs/heads/main`, `:main` (delete). Destinations are compared as full refs.
+- wildcard refspecs, resolved against the source: `refs/heads/release/*:refs/heads/ma*` maps `release/in` to `main`, so it's blocked. It's blocked even when `release/in` doesn't exist yet, since the same command could create it before pushing. `refs/heads/topic/*:refs/heads/topic/*` can never produce `main`, so it's allowed.
 - the local branch: a bare `git push` or `git push origin HEAD` from `main`
-- unqualified pushes from any branch: `remote.<name>.push` refspecs, `push.default` (`simple`, `current`, `upstream`, `matching`), `branch.<name>.merge`, `pushRemote`/`pushDefault`, and `@{push}`. A feature branch whose upstream is `main` can't get through with a bare `git push`.
+- unqualified pushes from any branch: `remote.<name>.push` refspecs (all of them, since git pushes every ref they match, not just the current branch), `push.default` (`simple`, `current`, `upstream`, `matching`), `branch.<name>.merge`, `pushRemote`/`pushDefault`, and `@{push}`. A feature branch whose upstream is `main` can't get through with a bare `git push`.
 - `--all`, `--branches`, `--mirror`, and pushes chained after `&&` or `;`
 
-I tested it against a throwaway repo on 19 cases, 14 that should be blocked and 5 that should be allowed, and all passed. I also asked Claude to run `git push` on `main` in this repo, and it was blocked. I wrote it in Node because the project already needs it, so it doesn't depend on `jq`.
+I tested it against a throwaway repo on 33 cases, 23 that should be blocked and 10 that should be allowed, including the wildcard and config cases, and all passed. I also asked Claude to run `git push` on `main` in this repo, and it was blocked. I wrote it in Node because the project already needs it, so it doesn't depend on `jq`.
 
 Limits: it reads the command as text, so a push to `main` that only appears inside a quoted string or heredoc is also blocked. It only guards Claude's tool calls; a `git push` typed in a terminal (or with `!`) isn't checked, so GitHub branch protection is still the real safeguard.
 
@@ -42,8 +43,11 @@ Limits: it reads the command as text, so a push to `main` that only appears insi
 I ran a docs-coverage check with nobody watching:
 
 ```
-claude -p "Check that every route in routes/ has a matching entry in docs/api.md and list any gaps" --allowedTools "Read,Grep,Glob"
+claude -p "Check that every route in routes/ has a matching entry in docs/api.md and list any gaps" \
+  --allowedTools Read --allowedTools Grep --allowedTools Glob
 ```
+
+Each tool is its own `--allowedTools` argument, so the three are clearly three separate rules, not one rule named `Read,Grep,Glob`.
 
 It found no gaps: all 5 routes (`GET /health`, `GET /users`, `GET /users/:id`, `POST /users`, `PUT /users/:id`) are documented, with matching status codes.
 

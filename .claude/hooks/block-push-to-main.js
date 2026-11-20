@@ -5,7 +5,9 @@
 // on the remote, resolving the destination the way git does: explicit refspecs,
 // remote.<name>.push refspecs, push.default (simple/current/upstream/matching),
 // branch.<name>.merge, pushRemote/pushDefault, and @{push}. So a feature branch
-// whose upstream is main can't slip through with a bare `git push`.
+// whose upstream is main can't slip through with a bare `git push`. Wildcard
+// refspecs are resolved against their source, so `release/*:ma*` (release/in ->
+// main) is caught too.
 //
 // Exit 2 blocks the tool call; stderr is shown to Claude as the reason.
 const { execFileSync } = require('node:child_process');
@@ -90,10 +92,10 @@ function checkSegment(segment, cwd) {
     // Unqualified push: what gets pushed comes from config.
     if (current === PROTECTED) return `"git push" from the local ${PROTECTED} branch`;
     if (configured.length > 0) {
+      // git pushes every ref matching these refspecs, not just the current branch.
       for (const spec of configured) {
-        if (destFromConfigured(spec, current) === PROTECTED) {
-          return `remote.${remote}.push (${spec}) sends ${current || 'HEAD'} to ${PROTECTED}`;
-        }
+        const hit = refspecHitsProtected(git, spec, current);
+        if (hit) return `remote.${remote}.push: ${hit}`;
       }
       return null;
     }
@@ -114,11 +116,10 @@ function checkSegment(segment, cwd) {
 
   for (const spec of refspecs) {
     const cleaned = spec.replace(/^\+/, '');
-    if (cleaned.includes(':')) {
-      const [src, dst] = cleaned.split(':');
-      const target = dst === '' ? null : stripHeads(dst === 'HEAD' ? current || '' : dst);
-      if (target === PROTECTED) return `refspec "${spec}" targets ${PROTECTED}`;
-      if (stripHeads(src) === PROTECTED && dst === '') continue; // `main:` is a no-op form
+    if (cleaned.includes(':') || cleaned.includes('*')) {
+      // Explicit destination, or a wildcard (whose destination is the pattern itself).
+      const hit = refspecHitsProtected(git, cleaned, current);
+      if (hit) return hit;
       continue;
     }
     // Source-only refspec: git chooses the destination.
@@ -140,6 +141,50 @@ function destForBranch(git, branch, pushDefault) {
     return stripHeads(cfg(git, `branch.${branch}.merge`) || '');
   }
   return branch; // simple and current push to a branch of the same name
+}
+
+const PROTECTED_REF = `refs/heads/${PROTECTED}`;
+
+// Can this refspec update the protected branch? Returns a reason or null.
+// Destinations are compared as full refs, and a wildcard destination is resolved
+// against the source: in `refs/heads/release/*:refs/heads/ma*`, `ma*` can produce
+// `main` when * = "in", so source `release/in` would land on main. The check is on
+// the pattern, not only on branches that exist now, because the same command could
+// create the source branch first (`git branch release/in && git push ...`).
+function refspecHitsProtected(git, spec, current) {
+  const cleaned = spec.replace(/^\+/, '');
+  if (cleaned.startsWith('^')) return null; // negative refspec: excludes, never pushes
+  const colon = cleaned.indexOf(':');
+  const src = colon === -1 ? cleaned : cleaned.slice(0, colon);
+  let dst = colon === -1 ? cleaned : cleaned.slice(colon + 1);
+  if (dst === '') dst = src; // `src:` behaves like `src`
+  if (dst === 'HEAD') dst = current || 'HEAD';
+  const fullDst = toFullRef(dst);
+
+  if (!fullDst.includes('*')) {
+    return fullDst === PROTECTED_REF ? `refspec "${spec}" targets ${PROTECTED}` : null;
+  }
+  const star = fullDst.indexOf('*');
+  const pre = fullDst.slice(0, star);
+  const post = fullDst.slice(star + 1);
+  if (
+    PROTECTED_REF.length < pre.length + post.length ||
+    !PROTECTED_REF.startsWith(pre) ||
+    !PROTECTED_REF.endsWith(post)
+  ) {
+    return null; // no possible match of the wildcard yields main
+  }
+  const capture = PROTECTED_REF.slice(pre.length, PROTECTED_REF.length - post.length);
+  const source = toFullRef(src).replace('*', capture);
+  const exists = git('rev-parse', '--verify', '--quiet', source);
+  return (
+    `wildcard refspec "${spec}" maps ${stripHeads(source)} to ${PROTECTED}` +
+    (exists ? '' : ` (that branch doesn't exist yet, but could be created)`)
+  );
+}
+
+function toFullRef(ref) {
+  return ref.startsWith('refs/') ? ref : `refs/heads/${ref}`;
 }
 
 // Apply a configured push refspec (e.g. "refs/heads/*:refs/heads/main", "HEAD:main") to a source branch.
