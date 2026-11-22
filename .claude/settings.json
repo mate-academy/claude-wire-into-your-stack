@@ -1,0 +1,40 @@
+{
+  "mcpServers": {
+    "filesystem": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/Users/Vladyslav_/projects"
+      ]
+    }
+  },
+  "permissions": {
+    "allow": [
+      "mcp__filesystem__read_directory",
+      "mcp__filesystem__read_text_file",
+      "mcp__filesystem__get_file_info",
+      "mcp__filesystem__list_directory",
+      "mcp__filesystem__list_directory_with_sizes",
+      "mcp__filesystem__search_files"
+    ],
+    "deny": [
+      "mcp__filesystem__create_directory",
+      "mcp__filesystem__write_file",
+      "mcp__filesystem__edit_file",
+      "mcp__filesystem__move_file",
+      "mcp__filesystem__rename_file",
+      "Bash(git push --force:*)"
+    ],
+    "ask": []
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash(git push --force:*)",
+        "mode": "block"
+      }
+    ]
+  }
+}
