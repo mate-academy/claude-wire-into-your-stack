@@ -13,7 +13,7 @@ The base to compare against is `$ARGUMENTS`. If that is empty, use the local `ma
 3. Run `npm run lint` and `npm test`.
 
 Checklist:
-- **Routes**: one route file per resource, mounted in `server.js` under its base path.
+- **Routes**: only the structure. `FAIL` only if a new resource has no route file of its own in `routes/`, or its router is not mounted in `server.js` under its base path. A bug inside a handler is not a Routes failure: report it under Data access, Status codes, Error shape, Tests or Docs. `N/A` if no routes changed.
 - **Data access**: routes never hold state; all reads and writes go through `db/store.js`.
 - **Status codes**: `400` for an invalid request body, `404` when a record is missing (a non-numeric id counts as missing), never a crash. A successful `DELETE` returns `204` with no body.
 - **Error shape**: every error response is JSON exactly like `{ "error": "message" }`.
@@ -23,4 +23,4 @@ Checklist:
 
 Reply in this format and nothing else:
 - One line per checklist item: `PASS`, `FAIL` or `N/A`, then the item name and, for a `FAIL`, the `file:line` and what is wrong.
-- A final `Verdict:` line: `Ready` if nothing failed, otherwise `Needs fixes` and the number of failures.
+- A final `Verdict:` line: `Ready` if nothing failed, otherwise `Needs fixes` and the number of `FAIL` lines above, counted exactly. Each problem is reported under one item only.

@@ -50,8 +50,14 @@ approval for the project's MCP server.
   first version had no clear base to compare with. I added the `origin/main` fallback above. I tested
   it in a single-branch clone with the changes committed: it used `origin/main` and reported the
   problems, it said "Ready" for a correct change, and it used the local `main` when I created one.
-  One weakness remains: in 2 of 4 runs it marked the "Routes" item as FAIL for a broken handler,
-  although that problem belongs under the other items.
+- **A second fix, to the "Routes" item:** in 2 of 4 runs it marked "Routes" as FAIL for a broken
+  handler, and once the verdict count did not match the FAIL lines. I made "Routes" about structure
+  only (a missing route file, or a router not mounted in `server.js`) and told it to count the FAIL
+  lines exactly. I retested in fresh clones: 3 runs with deliberate mistakes (Routes PASS, 5
+  failures, count matched), 3 runs with correct code ("Ready"), and 1 run with a new resource that
+  was never mounted (Routes FAIL). All 7 were right. In 5 of the 7 runs Claude chained several git
+  commands in one call, the `allowed-tools` list blocked that, and it ran them one by one. The
+  results were not affected.
 
 ## 4. Hook: lint after edits
 - **What it is:** a `PostToolUse` hook, so it reacts after an edit and does not prevent anything. The
