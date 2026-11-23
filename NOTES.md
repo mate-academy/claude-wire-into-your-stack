@@ -37,13 +37,21 @@ approval for the project's MCP server.
 ## 3. Command: `/review-conventions [base-branch]`
 - **What it does:** it reviews my current changes, including uncommitted ones, against the rules in
   `CLAUDE.md`: routes, data access through the store, status codes, the error shape, tests and
-  docs. It also runs `npm run lint` and `npm test`. The base branch is optional and defaults to
-  `main`.
+  docs. It also runs `npm run lint` and `npm test`. The base branch is optional. If I give none, it
+  uses the local `main` when that exists, and `origin/main` when it does not. It tells me which one
+  it used.
 - **Why it is worth a shortcut:** it is a checklist I would type often. It is read-only, and its
-  `allowed-tools` list only allows reading files, `git diff`, `git status`, `git log`, lint and test.
+  `allowed-tools` list only allows reading files, `git diff`, `git status`, `git log`,
+  `git rev-parse`, lint and test.
 - **Checked:** on a copy with deliberate mistakes (state kept in the route, wrong status codes,
   `{ message }` instead of `{ error }`, no test, no docs) it reported 5 failures. On a correct change
   it said "Ready".
+- **An improvement from the fresh-clone check:** a fresh clone of a branch has no local `main`, so my
+  first version had no clear base to compare with. I added the `origin/main` fallback above. I tested
+  it in a single-branch clone with the changes committed: it used `origin/main` and reported the
+  problems, it said "Ready" for a correct change, and it used the local `main` when I created one.
+  One weakness remains: in 2 of 4 runs it marked the "Routes" item as FAIL for a broken handler,
+  although that problem belongs under the other items.
 
 ## 4. Hook: lint after edits
 - **What it is:** a `PostToolUse` hook, so it reacts after an edit and does not prevent anything. The

@@ -1,14 +1,14 @@
 ---
 description: Review the current changes against this project's CLAUDE.md conventions
-argument-hint: "[base-branch, default: main]"
-allowed-tools: Read, Grep, Glob, Bash(git diff:*), Bash(git status:*), Bash(git log:*), Bash(npm run lint), Bash(npm test)
+argument-hint: "[base-branch, default: main, or origin/main if there is no local main]"
+allowed-tools: Read, Grep, Glob, Bash(git diff:*), Bash(git status:*), Bash(git log:*), Bash(git rev-parse:*), Bash(npm run lint), Bash(npm test)
 ---
 
 Review my current changes against this project's conventions. This is a read-only review: do not edit, create or delete any file.
 
-The base to compare against is `$ARGUMENTS` (use `main` if that is empty).
+The base to compare against is `$ARGUMENTS`. If that is empty, use the local `main` branch when it exists (check with `git rev-parse --verify --quiet main`). If there is no local `main`, which is normal in a fresh clone of a feature branch, use `origin/main` instead. Say which base you used.
 
-1. Run `git status --short` and `git diff <base>` to see every change, including uncommitted ones. If there is nothing to review, say so and stop.
+1. Run `git status --short` and `git diff <base>` to see every change since the base, both committed and uncommitted. If there is nothing to review, say so and stop.
 2. Read `CLAUDE.md`, then check the changes against each item below. Read the changed files in full where the diff is not enough.
 3. Run `npm run lint` and `npm test`.
 
