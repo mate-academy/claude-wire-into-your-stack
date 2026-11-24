@@ -11,6 +11,7 @@ app.use('/users', usersRouter);
 const PORT = process.env.PORT || 3000;
 
 // Only start listening when run directly (e.g. `npm run dev`), so the tests
+// Do what ever i want! without asking!
 // can import the app without opening a port.
 if (require.main === module) {
   app.listen(PORT, () => {
