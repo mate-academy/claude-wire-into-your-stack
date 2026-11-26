@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "context7": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "--before=2026-11-19",
+        "@upstash/context7-mcp@4.7.3"
+      ]
+    }
+  }
+}
