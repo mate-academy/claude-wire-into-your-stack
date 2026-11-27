@@ -1,6 +1,6 @@
 ---
 description: Review the current branch's changes against this project's checklist
-argument-hint: [optional focus, e.g. "validation"]
+argument-hint: '[optional focus, e.g. "validation"]'
 ---
 Review every change on the current branch compared with `main` (committed and uncommitted). Check each item and report it as PASS or FAIL with the file and line:
 
