@@ -14,5 +14,18 @@
       "mcp__docs__move_file",
       "mcp__docs__create_directory"
     ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/lint-edited-file.js"
+          }
+        ]
+      }
+    ]
   }
 }
