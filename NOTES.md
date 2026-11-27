@@ -31,9 +31,7 @@ Checked by feeding it a hook payload: a clean `routes/users.js` passes (exit 0);
 Task: check that `docs/api.md` matches the routes, without anyone watching.
 
 ```
-claude -p "Compare docs/api.md with the routes in routes/ and list any endpoint or status code that doesn't match." \
-  --allowedTools "Read,Grep,Glob,mcp__docs__read_text_file,mcp__docs__list_directory" \
-  --max-turns 8
+claude -p "Compare docs/api.md with the routes in routes/ and list any endpoint or status code that doesn't match." --allowedTools "Read,Grep,Glob,mcp__docs__read_text_file,mcp__docs__list_directory" --max-turns 8
 ```
 
 Locked down to reading: the built-in Read/Grep/Glob tools for the code and the two read tools from the docs server. No Edit, Write or Bash, so the run can report a mismatch but can't change anything, and `--max-turns` stops it from looping.
